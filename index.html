@@ -276,7 +276,34 @@ nav {
   color: var(--text-label);
 }
 .scroll-line { width: 20px; height: 0.5px; background: rgba(255,255,255,0.15); }
+  
+/* FOTOS GRID */
+.upload-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+.upload-card {
+  background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px;
+  aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.upload-card:hover { border-color: rgba(255,255,255,0.2); }
+.upload-card input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.upload-card.filled img { width: 100%; height: 100%; object-fit: cover; }
 
+/* VIDEO GRID */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.video-card {
+  background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px;
+  aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
+
+/* HERRAMIENTAS */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.tool-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 24px; }
+
+/* MODAL */
+.img-modal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+.img-modal.open { display: flex; }
+.img-modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+  
 /* ── STATS ── */
 .stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -476,10 +503,10 @@ footer p { font-size: 12px; color: var(--text-label); }
     Portafolio
   </div>
   <div class="nav-pills">
-    <a href="#Sobre mí" class="npill active">Sobre mí</a>
-    <a href="#Fotos" class="npill">Fotos</a>
-    <a href="#Vídeos" class="npill">Vídeos</a>
-    <a href="#Herramientas" class="npill">Herramientas</a>
+    <a href="#sobre-mi" class="npill active">Sobre mí</a>
+    <a href="#fotos" class="npill">Fotos</a>
+    <a href="#videos" class="npill">Vídeos</a>
+    <a href="#herramientas" class="npill">Herramientas</a>
   </div>
   <div class="nav-right">
     <button class="nbtn-prism">Contáctame</button>
@@ -592,13 +619,42 @@ footer p { font-size: 12px; color: var(--text-label); }
 </section>
 
 <!-- STATS -->
-<div class="stats fi">
+<div class="stats fi" id="sobre-mi">
   <div class="stat"><div class="stat-1 txt-justificado">Desde muy pequeño me han gustado las fotos, prácticamente desde que tuve mi primer móvil, un Nokia 6230, que contaba con una cámara de 640x480 píxeles. Aunque tiempo después descubrí que también me gustaba la edición, tanto de fotos, con la llegada de Instagram, como la de vídeos, para trabajos de clase. Siempre he creído que es bonito plasmar instantes que de otra manera solo se pueden conservar en nuestros recuerdos.</div><div class="stat-l"></div></div>
   <div class="stat"><div class="stat-1 txt-justificado">I've loved taking photos since I was very little, practically since I got my first mobile phone, a Nokia 6230, which had a 640x480 pixel camera. Later on, I discovered I also enjoyed editing, both photos, with the arrival of Instagram, and videos, for school projects. I've always believed it's beautiful to capture moments that otherwise can only be preserved in our memories.</div><div class="stat-l"></div></div>
   <div class="stat"><div class="stat-1 txt-justificado">Sempre adorei tirar fotos, desde muito pequena, praticamente desde que ganhei meu primeiro celular, um Nokia 6230, que tinha uma câmera de 640x480 pixels. Mais tarde, descobri que também gostava de editar, tanto fotos, com a chegada do Instagram, quanto vídeos, para trabalhos escolares. Sempre acreditei que é lindo capturar momentos que, de outra forma, só poderiam ser preservados em nossas memórias.</div><div class="stat-l"></div></div>
   <div class="stat"><div class="stat-1 txt-justificado">Mi amis foti ekde kiam mi estis tre malgranda, preskaŭ ekde kiam mi ricevis mian unuan poŝtelefonon, Nokia 6230, kiu havis fotilon kun rezolucio de 640x480 rastrumeroj. Poste, mi malkovris, ke mi ankaŭ ĝuis redakti, kaj fotojn, kun la alveno de Instagram, kaj filmetojn, por lernejaj projektoj. Mi ĉiam kredis, ke estas bele kapti momentojn, kiuj alie povus nur esti konservitaj en niaj memoroj.</div><div class="stat-l"></div></div>
 </div>
-
+<section id="fotos" style="border-top:0.5px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-label fi">Galería</div>
+    <h2 class="sec-title fi">Fotos</h2>
+    <div class="upload-grid fi" id="photo-grid"></div>
+  </div>
+</section>
+<section id="videos" style="border-top:0.5px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-label fi">Galería</div>
+    <h2 class="sec-title fi">Vídeos</h2>
+    <div class="video-grid fi" id="video-grid"></div>
+  </div>
+</section>
+<section id="herramientas" style="border-top:0.5px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-label fi">Equipamiento</div>
+    <h2 class="sec-title fi">Herramientas</h2>
+    <div class="tool-grid fi">
+      <div class="tool-card"><div class="tool-emoji">📷</div><div class="tool-name">Cámara</div><div class="tool-desc">Cuerpo de cámara principal</div></div>
+      <div class="tool-card"><div class="tool-emoji">🔭</div><div class="tool-name">Objetivos</div><div class="tool-desc">Focal fija, zoom, macro</div></div>
+      <div class="tool-card"><div class="tool-emoji">🖥️</div><div class="tool-name">Edición</div><div class="tool-desc">Lightroom, Photoshop, DaVinci...</div></div>
+    </div>
+  </div>
+</section>
+<div class="img-modal" id="imgModal">
+  <button class="img-modal-close" onclick="document.getElementById('imgModal').classList.remove('open')">✕</button>
+  <img id="imgModalSrc" src="" alt="">
+</div>
+  
 <!-- SKILLS -->
 <section id="skills">
   <div class="wrap">
@@ -669,6 +725,44 @@ footer p { font-size: 12px; color: var(--text-label); }
 </footer>
 
 <script>
+/* LÓGICA DE FOTOS */
+const photoGrid = document.getElementById('photo-grid');
+
+function makePhotoSlot() {
+  const card = document.createElement('div');
+  card.className = 'upload-card fi on';
+  card.innerHTML = `<input type="file" accept="image/*"><div class="upload-icon">📷</div><div class="upload-label">Subir foto</div>`;
+  card.querySelector('input').addEventListener('change', function(e) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+        card.innerHTML = `<img src="${ev.target.result}">`;
+        card.classList.add('filled');
+        card.onclick = () => {
+            document.getElementById('imgModalSrc').src = ev.target.result;
+            document.getElementById('imgModal').classList.add('open');
+        };
+        photoGrid.appendChild(makePhotoSlot()); // Añade un nuevo hueco vacío
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  });
+  return card;
+}
+photoGrid.appendChild(makePhotoSlot());
+
+/* LÓGICA DE VÍDEOS */
+const videoGrid = document.getElementById('video-grid');
+function makeVideoSlot() {
+  const card = document.createElement('div');
+  card.className = 'video-card fi on';
+  card.innerHTML = `<input type="file" accept="video/*"><div class="upload-label">Subir vídeo</div>`;
+  card.querySelector('input').addEventListener('change', function(e) {
+    const url = URL.createObjectURL(e.target.files[0]);
+    card.innerHTML = `<video src="${url}" controls style="width:100%;height:100%;object-fit:cover;"></video>`;
+    videoGrid.appendChild(makeVideoSlot());
+  });
+  return card;
+}
+videoGrid.appendChild(makeVideoSlot());
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.08 });
