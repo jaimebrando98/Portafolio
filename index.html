@@ -186,6 +186,10 @@ nav {
   padding: 8px 20px; border-radius: 100px; cursor: pointer;
   border: none; position: relative; overflow: hidden;
   transition: all 150ms ease;
+  /* ESTA ES LA LÍNEA QUE QUITA LA BARRA DE ABAJO */
+  text-decoration: none; 
+  display: inline-block;
+}
 }
 .nbtn-prism::before {
   content: '';
@@ -331,10 +335,31 @@ nav {
   font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-label); margin-top: 10px; font-weight: 500;
 }
-
+/* Colores personalizados para las etiquetas de contacto */
+.stat-l.wa { 
+  color: #25D366 !important; /* Verde WhatsApp */
+  opacity: 0.8; 
+}
+.stat-l.gm { 
+  color: #EA4335 !important; /* Rojo Gmail */
+  opacity: 0.8; 
+}
+.stat-l.tg { 
+  color: #0088cc !important; /* Azul Telegram */
+  opacity: 0.8; 
+}
+/* Efecto al pasar el ratón: que brillen más */
+.stat:hover .stat-l {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px currentColor);
+  transition: all 0.3s ease;
+}
 /* ── LAYOUT ── */
 .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 2; }
 section { padding: 110px 0; position: relative; z-index: 2; }
+#sobre-mi, section[id] {
+  scroll-margin-top: 80px;
+}  
 .sec-label {
   font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--text-label); margin-bottom: 14px; font-weight: 500;
@@ -707,10 +732,10 @@ footer p { font-size: 12px; color: var(--text-label); }
     <div class="sec-label fi" style="justify-content:center;display:flex">Contacto</div>
     <h2 class="fi">¿Hacemos<br>algo <span class="h-prism">brillante</span><br>juntos?</h2>
     <p class="fi">Disponible para proyectos freelance, colaboraciones y roles a tiempo completo.</p>
-  <div class="cta-1">
-    <div class="stat"><div class="stat-1">+34 626 290 816</div><div class="stat-l">WhatsApp</div></div>
-    <div class="stat"><div class="stat-1">jaime.brando98@gmail.com</div><div class="stat-l">Gmail</div></div>
-    <div class="stat"><div class="stat-1">@JBrando98</div><div class="stat-l">Telegram</div></div>
+  <div class="cta-contacts">
+    <div class="stat"><a href="https://wa.me/34626290816" target="_blank"><div class="stat-1">+34 626 290 816</div><div class="stat-l wa">WhatsApp</div></a></div>
+    <div class="stat"><a href="mailto:jaime.brando98@gmail.com"><div class="stat-1">jaime.brando98@gmail.com</div><div class="stat-l gm">Gmail</div></a></div>
+    <div class="stat"><a href="https://t.me/JBrando98" target="_blank"><div class="stat-1">@JBrando98</div><div class="stat-l tg">Telegram</div></a></div>
   </div>
 </section>
 
@@ -767,7 +792,6 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fi').forEach(el => obs.observe(el));
-
 document.querySelectorAll('.npill').forEach(p => {
   p.addEventListener('click', () => {
     document.querySelectorAll('.npill').forEach(x => x.classList.remove('active'));
