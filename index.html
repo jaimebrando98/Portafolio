@@ -65,6 +65,79 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+/* --- FIX DEL CUBO REDONDEADO --- */
+
+/* Contenedor principal: le damos un tamaño real para que no sea 0px */
+.cube-main-container {
+  width: 240px; 
+  height: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 7s ease-in-out infinite;
+  z-index: 5;
+}
+
+/* El cuerpo del cubo: Fíjate en el color y el radio */
+.framer-cube-body {
+  width: 220px; /* Tamaño real */
+  height: 220px; /* Tamaño real */
+  background-color: #0c0c0c; /* Tu color --surface */
+  border: 1px solid rgba(255,255,255,0.07); /* Tu color --border */
+  border-radius: 54px; /* La redondez de la foto 2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.03);
+}
+
+/* El texto JB */
+.cube-inner-text {
+  font-family: var(--sans);
+  font-size: 52px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5); /* Tu color --text-sub */
+  letter-spacing: -0.05em;
+  z-index: 10;
+}
+
+/* La línea prismática de la base */
+.cube-bottom-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--prism); /* Tu gradiente */
+  background-size: 200%;
+  filter: blur(4px);
+  animation: prism-move 4s linear infinite;
+}
+
+/* Efecto de grano (Grain) para el toque mate */
+.cube-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Sombra en el suelo */
+.cube-bottom-shadow {
+  position: absolute;
+  bottom: -40px;
+  width: 160px;
+  height: 30px;
+  background: var(--prism);
+  filter: blur(30px);
+  opacity: 0.15;
+  border-radius: 50%;
+  animation: prism-move 4s linear infinite;
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 .txt-izquierda {
     text-align: left;
@@ -491,83 +564,15 @@ footer p { font-size: 12px; color: var(--text-label); }
 
   <!-- Cubo flotante central -->
   <div class="hero-cube-area">
-    <div class="cube-wrap">
-       <svg viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg" width="350" height="370">
-        <defs>
-          <linearGradient id="gTop" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#1f1f1f"/>
-            <stop offset="100%" stop-color="#0d0d0d"/>
-          </linearGradient>
-          <linearGradient id="gLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#131313"/>
-            <stop offset="100%" stop-color="#090909"/>
-          </linearGradient>
-          <linearGradient id="gRight" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0f0f0f"/>
-            <stop offset="100%" stop-color="#070707"/>
-          </linearGradient>
-          <linearGradient id="p1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%"   stop-color="#FF2D2D"/>
-            <stop offset="17%"  stop-color="#FF6B00"/>
-            <stop offset="34%"  stop-color="#FFD600"/>
-            <stop offset="50%"  stop-color="#00FF6A"/>
-            <stop offset="67%"  stop-color="#00CFFF"/>
-            <stop offset="84%"  stop-color="#2060FF"/>
-            <stop offset="100%" stop-color="#8B2FFF"/>
-          </linearGradient>
-          <linearGradient id="p2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#8B2FFF"/>
-            <stop offset="33%"  stop-color="#00CFFF"/>
-            <stop offset="66%"  stop-color="#00FF6A"/>
-            <stop offset="100%" stop-color="#FFD600"/>
-          </linearGradient>
-          <linearGradient id="p3" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stop-color="#2060FF" stop-opacity="0.95"/>
-            <stop offset="40%"  stop-color="#00CFFF" stop-opacity="0.75"/>
-            <stop offset="70%"  stop-color="#00FF6A" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#FFD600" stop-opacity="0.2"/>
-          </linearGradient>
-          <filter id="fg"><feGaussianBlur stdDeviation="5"/></filter>
-          <filter id="fs"><feGaussianBlur stdDeviation="1.5"/></filter>
-        </defs>
+    <div class="cube-main-container">
+    
+    <div class="framer-cube-body">
+      <span class="cube-inner-text">JB</span>
+      <div class="cube-bottom-glow"></div>
+      <div class="cube-grain"></div>
+    </div>
 
-        <!-- cara izquierda -->
-        <polygon points="30,112 130,160 130,238 30,190" fill="url(#gLeft)"/>
-
-        <!-- banda prism izquierda baja -->
-        <polygon points="30,178 130,226 130,238 30,190" fill="url(#p2)" opacity="0.8" filter="url(#fg)"/>
-        <polygon points="30,168 130,216 130,228 30,180" fill="url(#p2)" opacity="0.45" filter="url(#fs)"/>
-        <polygon points="30,156 130,204 130,218 30,168" fill="url(#p2)" opacity="0.2"/>
-
-        <!-- cara derecha -->
-        <polygon points="130,160 230,112 230,190 130,238" fill="url(#gRight)"/>
-
-        <!-- banda prism derecha baja -->
-        <polygon points="130,226 230,178 230,190 130,238" fill="url(#p1)" opacity="0.8" filter="url(#fg)"/>
-        <polygon points="130,216 230,168 230,180 130,228" fill="url(#p1)" opacity="0.45" filter="url(#fs)"/>
-        <polygon points="130,204 230,156 230,170 130,216" fill="url(#p1)" opacity="0.2"/>
-
-        <!-- cara superior -->
-        <polygon points="30,112 130,64 230,112 130,160" fill="url(#gTop)"/>
-        <polygon points="30,112 130,64 230,112 130,160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
-
-        <!-- logo M cara superior -->
-        <text x="130" y="128" 
-            font-family="Arial, sans-serif" 
-            font-size="28" 
-            font-weight="900" 
-            fill="white" 
-            fill-opacity="0.6" 
-            text-anchor="middle"
-            style="letter-spacing: -1px;">
-          JB
-        </text>
-        <!-- aristas con prism -->
-        <line x1="30" y1="112" x2="130" y2="64" stroke="url(#p3)" stroke-width="0.8" opacity="0.5"/>
-        <line x1="130" y1="64" x2="230" y2="112" stroke="url(#p1)" stroke-width="0.8" opacity="0.4"/>
-        <line x1="130" y1="160" x2="130" y2="238" stroke="url(#p2)" stroke-width="0.6" opacity="0.5" filter="url(#fs)"/>
-      </svg>
-      <div class="cube-shadow"></div>
+    <div class="cube-bottom-shadow"></div>
     </div>
   </div>
   <div class="hero-content">
