@@ -181,25 +181,40 @@ nav {
 }
 .nbtn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
 .nbtn-prism {
-  font-family: var(--sans); font-size: 13px; color: #fff;
+  font-family: var(--sans); 
+  font-size: 13px; 
+  color: #fff;
   background: rgba(255,255,255,0.05);
-  padding: 8px 20px; border-radius: 100px; cursor: pointer;
-  border: none; position: relative; overflow: hidden;
+  padding: 8px 20px; 
+  border-radius: 100px; 
+  cursor: pointer;
+  border: none; 
+  position: relative; 
+  overflow: hidden;
   transition: all 150ms ease;
-  /* ESTA ES LA LÍNEA QUE QUITA LA BARRA DE ABAJO */
-  display: inline-flex;
-  align-items: center; 
-  justify-content: center;
-  text-decoration: none;
+
+  /* ESTO ES LO QUE DEVUELVE EL RGB: */
+  display: inline-flex;    
+  align-items: center;   
+  justify-content: center;   
+  text-decoration: none;  
+  z-index: 1;               
 }
-}
+
+/* Asegúrate de que este bloque también esté así para que el borde brille */
 .nbtn-prism::before {
   content: '';
-  position: absolute; inset: 0; border-radius: 100px; padding: 1px;
-  background: var(--prism); background-size: 200%;
+  position: absolute; 
+  inset: 0; 
+  border-radius: 100px; 
+  padding: 1.5px; /* Un poco más de grosor para que se vea mejor */
+  background: var(--prism); 
+  background-size: 200%;
   animation: prism-move 3s linear infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
+  -webkit-mask-composite: xor; 
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* ── HERO ── */
