@@ -234,21 +234,60 @@ nav {
   pointer-events: none; z-index: 1;
 }
 
+/* PEGA ESTO EN SU LUGAR: */
+
 .cube-wrap {
-  width: 260px; height: 280px;
-  animation: float 7s ease-in-out infinite;
+  width: 240px; 
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  animation: float 7s ease-in-out infinite; 
+  z-index: 5;
   margin-top: -60px;
+  overflow: visible; 
+}
+
+.floating-camera-img {
+  width: 220px; 
+  height: 220px;
+  object-fit: contain;
+  z-index: 10;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
+
+.cube-wrap::before {
+  content: '';
+  position: absolute; 
+  inset: -10px; 
+  border-radius: 54px; 
+  padding: 1px; 
+  background: var(--prism); 
+  background-size: 200%;
+  animation: prism-move 3s linear infinite; 
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; 
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.9;
+  filter: blur(2px);
 }
 
 .cube-shadow {
-  position: absolute; bottom: -80px; left: 50%;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 320px; height: 60px;
-  background: var(--prism); background-size: 300%;
-  animation: prism-move 4s linear infinite;
-  filter: blur(35px); opacity: 0.25;
+  width: 180px;
+  height: 30px;
+  background: var(--prism);
+  filter: blur(35px);
+  opacity: 0.18;
   border-radius: 50%;
+  z-index: -1;
+  animation: prism-move 4s linear infinite;
 }
 
 .hero-content {
@@ -558,89 +597,14 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- HERO -->
 <section class="hero" id="home">
 
-  <!-- Cubo flotante central -->
-  <div class="hero-cube-area">
-      <div class="cube-wrap">
-       <svg viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg" width="350" height="370">
-        <defs>
-          <linearGradient id="gTop" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#1f1f1f"/>
-            <stop offset="100%" stop-color="#0d0d0d"/>
-          </linearGradient>
-          <linearGradient id="gLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#131313"/>
-            <stop offset="100%" stop-color="#090909"/>
-          </linearGradient>
-          <linearGradient id="gRight" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#0f0f0f"/>
-            <stop offset="100%" stop-color="#070707"/>
-          </linearGradient>
-          <linearGradient id="p1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%"   stop-color="#FF2D2D"/>
-            <stop offset="17%"  stop-color="#FF6B00"/>
-            <stop offset="34%"  stop-color="#FFD600"/>
-            <stop offset="50%"  stop-color="#00FF6A"/>
-            <stop offset="67%"  stop-color="#00CFFF"/>
-            <stop offset="84%"  stop-color="#2060FF"/>
-            <stop offset="100%" stop-color="#8B2FFF"/>
-          </linearGradient>
-          <linearGradient id="p2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#8B2FFF"/>
-            <stop offset="33%"  stop-color="#00CFFF"/>
-            <stop offset="66%"  stop-color="#00FF6A"/>
-            <stop offset="100%" stop-color="#FFD600"/>
-          </linearGradient>
-          <linearGradient id="p3" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stop-color="#2060FF" stop-opacity="0.95"/>
-            <stop offset="40%"  stop-color="#00CFFF" stop-opacity="0.75"/>
-            <stop offset="70%"  stop-color="#00FF6A" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#FFD600" stop-opacity="0.2"/>
-          </linearGradient>
-          <filter id="fg"><feGaussianBlur stdDeviation="5"/></filter>
-          <filter id="fs"><feGaussianBlur stdDeviation="1.5"/></filter>
-        </defs>
-
-        <!-- cara izquierda -->
-        <polygon points="30,112 130,160 130,238 30,190" fill="url(#gLeft)"/>
-
-        <!-- banda prism izquierda baja -->
-        <polygon points="30,178 130,226 130,238 30,190" fill="url(#p2)" opacity="0.8" filter="url(#fg)"/>
-        <polygon points="30,168 130,216 130,228 30,180" fill="url(#p2)" opacity="0.45" filter="url(#fs)"/>
-        <polygon points="30,156 130,204 130,218 30,168" fill="url(#p2)" opacity="0.2"/>
-
-        <!-- cara derecha -->
-        <polygon points="130,160 230,112 230,190 130,238" fill="url(#gRight)"/>
-
-        <!-- banda prism derecha baja -->
-        <polygon points="130,226 230,178 230,190 130,238" fill="url(#p1)" opacity="0.8" filter="url(#fg)"/>
-        <polygon points="130,216 230,168 230,180 130,228" fill="url(#p1)" opacity="0.45" filter="url(#fs)"/>
-        <polygon points="130,204 230,156 230,170 130,216" fill="url(#p1)" opacity="0.2"/>
-
-        <!-- cara superior -->
-        <polygon points="30,112 130,64 230,112 130,160" fill="url(#gTop)"/>
-        <polygon points="30,112 130,64 230,112 130,160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
-
-        <!-- logo M cara superior -->
-        <text x="130" y="128" 
-            font-family="Arial, sans-serif" 
-            font-size="28" 
-            font-weight="900" 
-            fill="white" 
-            fill-opacity="0.6" 
-            text-anchor="middle"
-            style="letter-spacing: -1px;">
-          JB
-        </text>
-
-        <!-- aristas con prism -->
-        <line x1="30" y1="112" x2="130" y2="64" stroke="url(#p3)" stroke-width="0.8" opacity="0.5"/>
-        <line x1="130" y1="64" x2="230" y2="112" stroke="url(#p1)" stroke-width="0.8" opacity="0.4"/>
-        <line x1="130" y1="160" x2="130" y2="238" stroke="url(#p2)" stroke-width="0.6" opacity="0.5" filter="url(#fs)"/>
-      </svg>
-        
-      <div class="cube-shadow"></div>
-    </div>
+<!-- Camara fotos -->
+<div class="hero-cube-area">
+  <div class="cube-wrap">
+    <img src="camara_jb.png" alt="Cámara Profesional JB" class="floating-camera-img">
+    <div class="cube-shadow"></div>
   </div>
+</div>
+  
   <div class="hero-content">
     <div>
       <div class="h-label">Un recuerdo del presente</div>
