@@ -141,6 +141,10 @@ nav {
 .logo {
   font-family: var(--sans); font-size: 14px; font-weight: 500;
   display: flex; align-items: center; gap: 9px;
+  /* ESTO HACE QUE EL BOTÓN SEA "INVISIBLE" VISUALMENTE */
+  text-decoration: none; /* Quita el subrayado */
+  color: var(--text-title); /* Mantiene el color blanco original */
+  cursor: pointer; /* Mantiene el cursor de clic */
 }
 .logo-cube {
   width: 28px; height: 28px; border-radius: 8px;
@@ -528,15 +532,16 @@ footer p { font-size: 12px; color: var(--text-label); }
 
 <!-- NAV -->
 <nav>
-  <div class="logo">
-    <div class="logo-cube">
-      <svg viewBox="0 0 13 11"><text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">
+  <a href="#home" class="logo">
+  <div class="logo-cube">
+    <svg viewBox="0 0 13 11">
+      <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">
         JB
       </text>
-      </svg>
-    </div>
-    Portafolio
+    </svg>
   </div>
+  Portafolio
+</a>
   <div class="nav-pills">
     <a href="#sobre-mi" class="npill active">Sobre mí</a>
     <a href="#fotos" class="npill">Fotos</a>
