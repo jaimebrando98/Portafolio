@@ -235,63 +235,65 @@ nav {
 
 .floating-scene {
   display: flex; align-items: center; justify-content: center;
-  gap: 30px; /* Espacio reducido para que quepan mejor */
+  gap: 80px; /* Espacio reducido para que quepan mejor */
   position: relative;
-  overflow: visible;
+  z-index: 5;
 }
 
 .cube-wrap {
-  position: relative; display: flex; align-items: center; justify-content: center;
+  position: relative; display: flex; align-items: center; justify-content: center; overflow: visible;
 }
 
 /* Aura RGB más fina */
 .cube-wrap::before {
   content: ''; position: absolute; 
-  inset: -5px; border-radius: 50%; padding: 1.2px; 
+  inset: -15px; border-radius: 24%; padding: 2px; 
   background: var(--prism); background-size: 200%;
   animation: prism-move 3s linear infinite; 
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
-  opacity: 0.8; filter: blur(2px); z-index: 5;
+  opacity: 0.85; filter: blur(4px); z-index: 5;
 }
 
 /* --- TAMAÑOS FIJOS PARA EVITAR "FOTOS GIGANTES" --- */
 
 /* 1. Cámara Central */
 .main-camera-wrap { 
-  width: 220px; height: 220px; z-index: 10; 
+  width: 420px; height: 320px; z-index: 10; 
   animation: float-main 7s ease-in-out infinite; 
 }
 .floating-img-main { 
-  width: 200px !important; height: auto; 
-  z-index: 10; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6)); 
+  width: 380px !important; height: auto; 
+  border-radius: 12px;
+  z-index: 10; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); 
 }
 
 /* 2. Herramientas (iPhone y Trípode) */
-.tool-side { width: 120px; height: 120px; z-index: 5; }
+.tool-side { width: 200px; height: 250px; z-index: 5; }
 
 /* Esta clase controla el tamaño de las otras dos fotos para que no sean gigantes */
 .floating-img-tool { 
-  width: 100px !important; height: auto; 
+  width: 180px !important; height: auto;
+  border-radius: 10px;
   z-index: 10; 
 }
 
-.iphone-wrap { animation: float-iphone 6s ease-in-out infinite; margin-top: 40px; }
-.tripod-wrap { animation: float-tripod 8s ease-in-out infinite; margin-top: -30px; }
+.iphone-wrap { animation: float-iphone 6s ease-in-out infinite; margin-top: 60px; }
+.tripod-wrap { animation: float-tripod 8s ease-in-out infinite; margin-top: -50px; }
 
 /* Sombras */
 .cube-shadow {
-  position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
-  background: var(--prism); filter: blur(25px); opacity: 0.15; border-radius: 50%;
+  position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
+  background: var(--prism); filter: blur(45px); opacity: 0.12; border-radius: 50%;
   z-index: -1; animation: prism-move 4s linear infinite;
 }
-.main-camera-wrap .cube-shadow { width: 150px; height: 20px; }
-.tool-side .cube-shadow { width: 80px; height: 15px; }
+.main-camera-wrap .cube-shadow { width: 300px; height: 40px; }
+.tool-side .cube-shadow { width: 140px; height: 25px; }
 
 /* Animaciones simplificadas */
-@keyframes float-main { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-@keyframes float-iphone { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes float-tripod { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+@keyframes float-main { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+@keyframes float-iphone { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+@keyframes float-tripod { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-40px); } }
 
 .hero-content {
   position: relative; z-index: 2;
