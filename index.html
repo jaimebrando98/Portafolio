@@ -139,81 +139,88 @@ p, .stat-1, .h-desc {
   transition: 0.3s ease;
 }
 
-/* 📱 MEDIA QUERY PARA MÓVILES */
+/* --- LÓGICA DE VISIBILIDAD (Añadir esto) --- */
+.nav-mobile-view, .menu-toggle, .mobile-center-title { display: none; }
+
+/* 📱 SOLO PARA MÓVILES (Overwrites) */
 @media (max-width: 768px) {
-  /* Navegación Móvil */
-  .nav-center-title { display: block; }
-  .nav-pills { display: none; } /* Oculta pills de PC */
-  .nav-right { display: none; } /* Oculta botón contacto de PC */
-
-  .hamburger { display: flex; }
-
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(15px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    border-left: 0.5px solid var(--border);
+  /* 1. Escondemos la barra de PC para que no haya doble barra */
+  .nav-desktop-view { display: none; }
+  
+  /* 2. Mostramos y configuramos la barra móvil (3 columnas: Logo | Título | Hamburguesa) */
+  .nav-mobile-view { 
+    display: flex; 
+    width: 100%; 
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  
+  .mobile-center-title { 
+    display: block; 
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #fff;
   }
 
-  /* Mostrar menú al activar checkbox */
-  .menu-toggle:checked ~ .nav-menu { right: 0; }
+  /* 3. Menú Hamburguesa */
+  .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 2000; }
+  .hamburger span { width: 22px; height: 2px; background: #fff; transition: 0.3s; }
 
-  /* Animación de Hamburguesa a X */
-  .menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-menu-mobile {
+    position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+    background: #000; display: flex; flex-direction: column; 
+    align-items: center; justify-content: center; gap: 35px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1500;
+  }
+  .nav-menu-mobile a { 
+    color: #fff; text-decoration: none; font-size: 22px; font-weight: 400;
+  }
+
+  /* Animaciones del menú abierto */
+  .menu-toggle:checked ~ .nav-menu-mobile { right: 0; }
+  .menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
-  .menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-  /* CORRECCIÓN HERO: Evita solapamiento */
-  .hero {
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 100px;
+  /* 4. ARREGLO DEL HERO (Evita que las cámaras pisen el texto) */
+  .hero { 
+    height: auto !important; 
+    min-height: 100vh; 
+    display: flex !important; 
+    flex-direction: column !important; 
+    padding-top: 100px; 
+    justify-content: flex-start !important;
   }
-  .hero-cube-area {
-    position: relative; /* Ya no flota sobre el texto */
-    order: 1; /* Las cámaras van primero */
-    height: auto;
-    margin-bottom: 40px;
+
+  .hero-cube-area { 
+    position: relative !important; 
+    order: 1; /* Cámaras primero */
+    height: auto !important; 
+    margin-bottom: 20px;
+    transform: scale(0.6); /* Encoge las cámaras para que quepan */
   }
-  .floating-scene {
-    flex-direction: column;
-    gap: 40px;
-    transform: scale(0.7); /* Reduce tamaño general para móvil */
-  }
-  .hero-content {
-    order: 2; /* El texto va después */
-    padding: 20px 24px 60px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .h-title { 
-    font-size: 38px; 
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .h-right { 
-    max-width: 100%; 
+
+  .hero-content { 
+    order: 2; /* Texto después */
+    flex-direction: column !important; 
     text-align: center; 
+    padding: 20px 24px 60px !important;
+    align-items: center !important;
   }
-  /* Grillas de Fotos y Videos */
-  .upload-grid, .video-grid {
-    grid-template-columns: 1fr !important;
-  }
+
+  .h-title { font-size: 38px !important; text-align: center !important; }
+  .h-right { max-width: 100% !important; text-align: center !important; margin-top: 20px; }
+  .txt-derecha { text-align: center !important; }
+
+  /* 5. TEXTO JUSTIFICADO (Solo en móvil) */
+  p, .stat-1, .h-desc { text-align: justify; hyphens: auto; }
+
+  /* 6. GRILLAS A UNA COLUMNA */
+  .upload-grid, .video-grid { grid-template-columns: 1fr !important; }
 }
     
 html { scroll-behavior: smooth; }
@@ -698,32 +705,15 @@ footer p { font-size: 12px; color: var(--text-label); }
 
 <!-- NAV -->
 <nav>
-  <div class="nav-container">
+  <div class="nav-desktop-view">
     <a href="#home" class="logo">
       <div class="logo-cube">
         <svg viewBox="0 0 13 11">
-          <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">
-            JB
-          </text>
+          <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">JB</text>
         </svg>
       </div>
+      Portafolio
     </a>
-    <div class="nav-center-title">Portafolio</div>
-    <input type="checkbox" id="menu-toggle" class="menu-toggle">
-    <label for="menu-toggle" class="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-    <div class="nav-menu">
-      <div class="nav-pills-mobile-wrapper">
-        <a href="#sobre-mi" class="npill">Sobre mí</a>
-        <a href="#fotos" class="npill">Fotos</a>
-        <a href="#videos" class="npill">Vídeos</a>
-        <a href="#herramientas" class="npill">Herramientas</a>
-      </div>
-      <a href="#contact" class="nbtn-prism">Contáctame</a>
-    </div>
     <div class="nav-pills">
       <a href="#sobre-mi" class="npill active">Sobre mí</a>
       <a href="#fotos" class="npill">Fotos</a>
@@ -734,8 +724,33 @@ footer p { font-size: 12px; color: var(--text-label); }
       <a href="#contact" class="nbtn-prism">Contáctame</a>
     </div>
   </div>
-</nav>
 
+  <div class="nav-mobile-view">
+    <a href="#home" class="logo">
+      <div class="logo-cube">
+        <svg viewBox="0 0 13 11">
+          <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">JB</text>
+        </svg>
+      </div>
+    </a>
+
+    <div class="mobile-center-title">Portafolio</div>
+
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+      <span></span><span></span><span></span>
+    </label>
+
+    <div class="nav-menu-mobile">
+      <a href="#sobre-mi" onclick="document.getElementById('menu-toggle').checked = false">Sobre mí</a>
+      <a href="#fotos" onclick="document.getElementById('menu-toggle').checked = false">Fotos</a>
+      <a href="#videos" onclick="document.getElementById('menu-toggle').checked = false">Vídeos</a>
+      <a href="#herramientas" onclick="document.getElementById('menu-toggle').checked = false">Herramientas</a>
+      <a href="#contact" onclick="document.getElementById('menu-toggle').checked = false">Contáctame</a>
+    </div>
+  </div>
+</nav>
+  
 <!-- HERO -->
 <section class="hero" id="home">
 
@@ -846,6 +861,9 @@ footer p { font-size: 12px; color: var(--text-label); }
 </footer>
 
 <script>
+  function closeMenu() {
+    document.getElementById('menu-toggle').checked = false;
+}
 /* LÓGICA DE FOTOS */
 const photoGrid = document.getElementById('photo-grid');
 
@@ -862,9 +880,8 @@ function makePhotoSlot() {
             document.getElementById('imgModalSrc').src = ev.target.result;
             document.getElementById('imgModal').classList.add('open');
         };
-        photoGrid.appendChild(makePhotoSlot());
-        photoGrid.appendChild(makePhotoSlot());
-        photoGrid.appendChild(makePhotoSlot());
+       for (let i = 0; i < 4; i++) {
+      photoGrid.appendChild(makePhotoSlot());
     };
     reader.readAsDataURL(e.target.files[0]);
   });
@@ -881,8 +898,7 @@ function makeVideoSlot() {
   card.querySelector('input').addEventListener('change', function(e) {
     const url = URL.createObjectURL(e.target.files[0]);
     card.innerHTML = `<video src="${url}" controls style="width:100%;height:100%;object-fit:cover;"></video>`;
-    videoGrid.appendChild(makeVideoSlot());
-    videoGrid.appendChild(makeVideoSlot());
+    for (let i = 0; i < 4; i++) {
     videoGrid.appendChild(makeVideoSlot());
 
   });
