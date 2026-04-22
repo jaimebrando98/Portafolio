@@ -61,7 +61,8 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
+
+  <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 .txt-izquierda {
     text-align: left;
@@ -79,7 +80,46 @@
     text-align: justify;
     hyphens: auto;
   }
+/* 📱 RESPONSIVE PARA MÓVIL (index.html) */
+@media (max-width: 768px) {
+  /* Navegación */
+  nav { padding: 0 20px; }
+  .nav-pills { display: none; } /* Ocultamos los botones centrales en móvil para limpiar espacio */
 
+  /* Hero Texto */
+  .hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 24px 40px;
+    text-align: left;
+  }
+  .h-right { max-width: 100%; text-align: left; }
+  .h-desc { font-size: 16px; text-align: left; }
+
+  /* LA ESCENA DE LOS 3 OBJETOS */
+  .floating-scene {
+    flex-direction: column; /* Apilamos: Trípode arriba, Cámara, iPhone abajo */
+    gap: 20px;
+    transform: scale(0.7); /* Reducimos todo el conjunto un 30% */
+  }
+  
+  .main-camera-wrap { width: 280px; height: 220px; }
+  .floating-img-main { width: 250px !important; }
+  
+  .tool-side { width: 120px; height: 120px; }
+  .floating-img-tool { width: 100px !important; }
+
+  /* Ajustamos los márgenes para que no se solapen mucho */
+  .tripod-wrap { margin-top: 0; }
+  .iphone-wrap { margin-top: 0; }
+
+  /* Grids de Fotos y Vídeos */
+  .upload-grid, .video-grid {
+    grid-template-columns: 1fr; /* Una sola columna en móvil */
+    padding: 0 20px;
+  }
+}
+    
 :root {
   --bg:         #000000;
   --surface:    #0c0c0c;
