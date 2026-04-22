@@ -97,6 +97,125 @@
   --prism-d: linear-gradient(180deg,#FF2D2D,#FF6B00,#FFD600,#00FF6A,#00CFFF,#2060FF,#8B2FFF);
 }
 
+/* ── ARREGLOS DE JUSTIFICACIÓN Y RESPONSIVIDAD ── */
+/* Justificación global de textos narrativos */
+p, .stat-1, .h-desc {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+/* Contenedor Nav para soportar 3 columnas en móvil */
+.nav-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.nav-center-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-title);
+  display: none; /* Oculto en PC */
+}
+/* Lógica del Menú Hamburguesa */
+.menu-toggle { display: none; }
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1001;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  transition: 0.3s ease;
+}
+
+/* 📱 MEDIA QUERY PARA MÓVILES */
+@media (max-width: 768px) {
+  /* Navegación Móvil */
+  .nav-center-title { display: block; }
+  .nav-pills { display: none; } /* Oculta pills de PC */
+  .nav-right { display: none; } /* Oculta botón contacto de PC */
+
+  .hamburger { display: flex; }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border-left: 0.5px solid var(--border);
+  }
+
+  /* Mostrar menú al activar checkbox */
+  .menu-toggle:checked ~ .nav-menu { right: 0; }
+
+  /* Animación de Hamburguesa a X */
+  .menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+  .menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* CORRECCIÓN HERO: Evita solapamiento */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 100px;
+  }
+  .hero-cube-area {
+    position: relative; /* Ya no flota sobre el texto */
+    order: 1; /* Las cámaras van primero */
+    height: auto;
+    margin-bottom: 40px;
+  }
+  .floating-scene {
+    flex-direction: column;
+    gap: 40px;
+    transform: scale(0.7); /* Reduce tamaño general para móvil */
+  }
+  .hero-content {
+    order: 2; /* El texto va después */
+    padding: 20px 24px 60px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .h-title { 
+    font-size: 38px; 
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .h-right { 
+    max-width: 100%; 
+    text-align: center; 
+  }
+  /* Grillas de Fotos y Videos */
+  .upload-grid, .video-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+    
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--sans);
@@ -579,24 +698,41 @@ footer p { font-size: 12px; color: var(--text-label); }
 
 <!-- NAV -->
 <nav>
-  <a href="#home" class="logo">
-  <div class="logo-cube">
-    <svg viewBox="0 0 13 11">
-      <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">
-        JB
-      </text>
-    </svg>
-  </div>
-  Portafolio
-</a>
-  <div class="nav-pills">
-    <a href="#sobre-mi" class="npill active">Sobre mí</a>
-    <a href="#fotos" class="npill">Fotos</a>
-    <a href="#videos" class="npill">Vídeos</a>
-    <a href="#herramientas" class="npill">Herramientas</a>
-  </div>
-  <div class="nav-right">
-    <a href="#contact" class="nbtn-prism">Contáctame</a>
+  <div class="nav-container">
+    <a href="#home" class="logo">
+      <div class="logo-cube">
+        <svg viewBox="0 0 13 11">
+          <text x="50%" y="80%" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif">
+            JB
+          </text>
+        </svg>
+      </div>
+    </a>
+    <div class="nav-center-title">Portafolio</div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="nav-menu">
+      <div class="nav-pills-mobile-wrapper">
+        <a href="#sobre-mi" class="npill">Sobre mí</a>
+        <a href="#fotos" class="npill">Fotos</a>
+        <a href="#videos" class="npill">Vídeos</a>
+        <a href="#herramientas" class="npill">Herramientas</a>
+      </div>
+      <a href="#contact" class="nbtn-prism">Contáctame</a>
+    </div>
+    <div class="nav-pills">
+      <a href="#sobre-mi" class="npill active">Sobre mí</a>
+      <a href="#fotos" class="npill">Fotos</a>
+      <a href="#videos" class="npill">Vídeos</a>
+      <a href="#herramientas" class="npill">Herramientas</a>
+    </div>
+    <div class="nav-right">
+      <a href="#contact" class="nbtn-prism">Contáctame</a>
+    </div>
   </div>
 </nav>
 
@@ -660,6 +796,11 @@ footer p { font-size: 12px; color: var(--text-label); }
     <div class="sec-label fi">Galería</div>
     <h2 class="sec-title fi">Vídeos</h2>
     <div class="video-grid fi" id="video-grid"></div>
+    <div style="text-align: center; margin-top: 60px;" class="fi">
+      <a href="portfolio_videos.html" class="btn-solid" style="text-decoration: none; padding: 16px 40px; font-size: 15px;">
+          Ver Galería de Vídeos Completa →
+      </a>
+    </div>
   </div>
 </section>
 <section id="herramientas" style="border-top:0.5px solid var(--border)">
@@ -721,7 +862,9 @@ function makePhotoSlot() {
             document.getElementById('imgModalSrc').src = ev.target.result;
             document.getElementById('imgModal').classList.add('open');
         };
-        photoGrid.appendChild(makePhotoSlot()); // Añade un nuevo hueco vacío
+        photoGrid.appendChild(makePhotoSlot());
+        photoGrid.appendChild(makePhotoSlot());
+        photoGrid.appendChild(makePhotoSlot());
     };
     reader.readAsDataURL(e.target.files[0]);
   });
@@ -739,6 +882,9 @@ function makeVideoSlot() {
     const url = URL.createObjectURL(e.target.files[0]);
     card.innerHTML = `<video src="${url}" controls style="width:100%;height:100%;object-fit:cover;"></video>`;
     videoGrid.appendChild(makeVideoSlot());
+    videoGrid.appendChild(makeVideoSlot());
+    videoGrid.appendChild(makeVideoSlot());
+
   });
   return card;
 }
