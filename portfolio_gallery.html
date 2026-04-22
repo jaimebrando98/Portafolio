@@ -10,6 +10,39 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Esto hace que todos los bloques de texto de la galería se justifiquen automáticamente */
+.chapter-desc, .slide-body, .pillar-text, .matrix-cell-body, .hero-subtitle, .slide-caption {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+  
+/* Añadir al final del <style> */
+.chapter-desc, .slide-body, .pillar-text, .matrix-cell-body, .hero-subtitle {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 42px !important; }
+  
+  /* Evitar que las imágenes pisen el texto en las comparaciones */
+  .slide-split {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+  .slide-img-wrap { height: 300px; }
+  .slide-text { padding: 30px 20px !important; }
+
+  /* Ajuste de Grillas */
+  .photo-grid-4, .photo-grid-3, .photo-grid-2, .comparison-grid, .matrix-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Nav móvil igual que en index */
+  .nav-pills { display: none; }
+}
+  
 :root {
   --bg:         #000000;
   --surface:    #0c0c0c;
@@ -424,17 +457,24 @@ footer p { font-size: 12px; color: var(--text-label); }
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">
-    <div class="logo-cube"><span>JB</span></div>
-    Portafolio
-  </a>
-  <div class="nav-pills">
-    <a href="index.html#sobre-mi"     class="npill">Sobre mí</a>
-    <a href="index.html#videos"       class="npill">Vídeos</a>
-    <a href="index.html#herramientas" class="npill">Herramientas</a>
-  </div>
-  <div class="nav-right">
-    <a href="index.html#contact" class="nbtn-prism">Contáctame</a>
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <div class="logo-cube"><span>JB</span></div>
+    </a>
+    <div class="nav-center-title">Portafolio</div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="nav-menu">
+      <a href="index.html#sobre-mi" class="npill">Sobre mí</a>
+      <a href="index.html#fotos" class="npill">Fotos</a>
+      <a href="index.html#videos" class="npill">Vídeos</a>
+      <a href="index.html#herramientas" class="npill">Herramientas</a>
+      <a href="index.html#contact" class="nbtn-prism">Contáctame</a>
+    </div>
   </div>
 </nav>
 
