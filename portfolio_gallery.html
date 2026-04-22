@@ -6,9 +6,42 @@
 <title>Portafolio Fotográfico — JB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* 📱 RESPONSIVE PARA MÓVIL (portfolio_gallery.html) */
+@media (max-width: 768px) {
+  /* General */
+  .wrap, .chapter-header, footer { padding: 0 24px; }
+
+  /* Hero */
+  .hero-title { font-size: 48px; }
+  .portfolio-hero { padding: 100px 24px 40px; min-height: auto; }
+  /* Slides Divididos (Split) */
+  .slide-split.img-left, .slide-split.img-right {
+    grid-template-columns: 1fr; /* Dejamos de dividir la pantalla en dos */
+  }
+  .slide-text { padding: 40px 24px; }
+  /* Comparaciones Antes/Después */
+  .comparison-grid {
+    grid-template-columns: 1fr; /* Una foto encima de la otra */
+  }
+  .comparison-pillars {
+    grid-template-columns: 1fr; /* Los textos de análisis en una columna */
+  }
+  /* Matrices y Grillas */
+  .matrix-grid, .photo-grid-4, .photo-grid-3, .photo-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .photo-grid-panorama .bottom-row {
+    grid-template-columns: 1fr;
+  }
+  /* Ajuste de imágenes */
+  .grid-img-wrap, .comparison-img-wrap {
+    aspect-ratio: 4/3; 
+  }
+}  
 :root {
   --bg:         #000000;
   --surface:    #0c0c0c;
