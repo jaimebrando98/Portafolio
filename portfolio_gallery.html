@@ -11,33 +11,22 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* Esto hace que todos los bloques de texto de la galería se justifiquen automáticamente */
-.chapter-desc, .slide-body, .pillar-text, .matrix-cell-body, .hero-subtitle, .slide-caption {
+.chapter-desc, .slide-body, .pillar-text, .matrix-cell-body, .hero-subtitle {
   text-align: justify;
-  text-justify: inter-word;
   hyphens: auto;
 }
   
-/* Añadir al final del <style> */
-.chapter-desc, .slide-body, .pillar-text, .matrix-cell-body, .hero-subtitle {
-  text-align: justify;
-  text-justify: inter-word;
-}
-
 @media (max-width: 768px) {
-  .hero-title { font-size: 42px !important; }
-  
-  /* Evitar que las imágenes pisen el texto en las comparaciones */
-  .slide-split {
-    grid-template-columns: 1fr !important;
-    min-height: auto !important;
-  }
+  /* En móvil, las secciones "split" se apilan para que no se corten */
+  .slide-split { grid-template-columns: 1fr !important; min-height: auto !important; }
   .slide-img-wrap { height: 300px; }
   .slide-text { padding: 30px 20px !important; }
-
-  /* Ajuste de Grillas */
+  
+  /* Grillas de fotos a una columna */
   .photo-grid-4, .photo-grid-3, .photo-grid-2, .comparison-grid, .matrix-grid {
     grid-template-columns: 1fr !important;
   }
+}
   
   /* Nav móvil igual que en index */
   .nav-pills { display: none; }
