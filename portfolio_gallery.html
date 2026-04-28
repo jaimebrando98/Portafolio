@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Fotográfico — JB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#000; --surface:#0c0c0c; --text-title:#FFF;
+  --text-sub:rgba(255,255,255,0.55); --text-body:rgba(255,255,255,0.35);
+  --text-label:rgba(255,255,255,0.28); --text-nav:rgba(255,255,255,0.60);
+  --border:rgba(255,255,255,0.07); --border-md:rgba(255,255,255,0.12);
+  --gold:#C9A84C; --gold-light:#E8C97A;
+  --serif:'Playfair Display',serif; --sans:'Inter',sans-serif;
+  --prism:linear-gradient(90deg,#FF2D2D,#FF6B00,#FFD600,#00FF6A,#00CFFF,#2060FF,#8B2FFF,#FF2D2D);
+}
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text-title); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+body::after { content:''; position:fixed; inset:0; z-index:999; pointer-events:none; opacity:0.028; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:200px; }
+@keyframes prism-move { from{background-position:0% 50%} to{background-position:200% 50%} }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:0.5px solid var(--border); }
+.logo { font-family:var(--sans); font-size:14px; font-weight:500; display:flex; align-items:center; gap:9px; text-decoration:none; color:var(--text-title); }
+.logo-cube { width:28px; height:28px; border-radius:8px; background:linear-gradient(145deg,#1a1a1a,#080808); border:0.5px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.logo-cube::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--prism); background-size:200%; animation:prism-move 3s linear infinite; }
+.logo-cube span { font-size:11px; font-weight:700; color:rgba(255,255,255,0.8); z-index:1; }
+.nav-pills { display:flex; align-items:center; gap:2px; background:rgba(255,255,255,0.03); border:0.5px solid var(--border); border-radius:100px; padding:3px; }
+.npill { font-size:13px; color:var(--text-nav); padding:6px 18px; border-radius:100px; cursor:pointer; transition:all 150ms ease; text-decoration:none; border:none; background:transparent; }
+.npill:hover { color:#fff; background:rgba(255,255,255,0.05); }
+.nav-right { display:flex; gap:8px; align-items:center; }
+.nbtn-prism { font-family:var(--sans); font-size:13px; color:#fff; background:rgba(255,255,255,0.05); padding:8px 20px; border-radius:100px; cursor:pointer; border:none; position:relative; overflow:hidden; transition:all 150ms ease; text-decoration:none; display:inline-block; }
+.nbtn-prism::before { content:''; position:absolute; inset:0; border-radius:100px; padding:1px; background:var(--prism); background-size:200%; animation:prism-move 3s linear infinite; -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
+
+/* HERO */
+.portfolio-hero { min-height:55vh; display:flex; flex-direction:column; justify-content:flex-end; padding:60px 48px 72px; position:relative; overflow:hidden; border-bottom:0.5px solid var(--border); }
+.portfolio-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(201,168,76,0.06) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 30%,rgba(37,99,235,0.05) 0%,transparent 50%); pointer-events:none; }
+.hero-eyebrow { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:20px; }
+.hero-title { font-family:var(--serif); font-size:clamp(60px,9vw,120px); font-weight:900; line-height:0.88; letter-spacing:-0.03em; color:var(--text-title); max-width:900px; margin-bottom:28px; }
+.hero-title em { font-style:italic; color:var(--gold-light); }
+.hero-subtitle { font-size:14px; line-height:1.7; color:var(--text-body); max-width:520px; }
+.prism-line { width:100%; height:1px; background:var(--prism); background-size:300%; animation:prism-move 4s linear infinite; }
+
+/* CHAPTER */
+.chapter-header { padding:80px 48px 40px; border-bottom:0.5px solid var(--border); }
+.chapter-tag { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:12px; }
+.chapter-title { font-family:var(--serif); font-size:clamp(32px,4vw,52px); font-weight:900; letter-spacing:-0.03em; line-height:0.95; color:var(--text-title); }
+.chapter-desc { font-size:13px; color:var(--text-body); line-height:1.7; max-width:600px; margin-top:16px; }
+
+/* SLIDE BLOCKS */
+.slide-block { position:relative; border-bottom:0.5px solid var(--border); }
+
+/* Full bleed */
+.slide-full { min-height:70vh; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; position:relative; }
+.slide-full .slide-img-wrap { position:absolute; inset:0; z-index:0; }
+.slide-full .slide-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.slide-full .slide-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.2) 50%,transparent 100%); z-index:1; }
+.slide-full .slide-text { position:relative; z-index:2; padding:48px 48px 56px; }
+
+/* Split */
+.slide-split { display:grid; min-height:60vh; }
+.slide-split.img-left  { grid-template-columns:55% 45%; }
+.slide-split.img-right { grid-template-columns:45% 55%; }
+.slide-split .slide-img-wrap { overflow:hidden; }
+.slide-split .slide-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 600ms ease; }
+.slide-split:hover .slide-img-wrap img { transform:scale(1.03); }
+.slide-split .slide-text { display:flex; flex-direction:column; justify-content:center; padding:56px 52px; background:var(--bg); }
+
+/* Comparison */
+.slide-comparison { padding:64px 48px; background:var(--surface); }
+.comparison-header { margin-bottom:40px; }
+.comparison-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; border:0.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:32px; }
+.comparison-img-wrap { position:relative; aspect-ratio:16/10; overflow:hidden; }
+.comparison-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.comparison-label { position:absolute; top:14px; left:14px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:500; background:rgba(0,0,0,0.55); padding:4px 10px; border-radius:4px; backdrop-filter:blur(4px); }
+.comparison-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.pillar-item { background:var(--bg); padding:24px 28px; }
+.pillar-tag { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:10px; }
+.pillar-text { font-size:13px; color:var(--text-body); line-height:1.65; }
+
+/* Photogrid */
+.slide-photogrid { padding:64px 48px; }
+.photo-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; border-radius:12px; overflow:hidden; margin-bottom:24px; }
+.photo-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:3px; border-radius:12px; overflow:hidden; margin-bottom:24px; }
+.photo-grid-panorama { display:grid; grid-template-rows:auto auto; gap:3px; margin-bottom:24px; }
+.photo-grid-panorama .top-row { display:grid; gap:3px; }
+.photo-grid-panorama .bottom-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; }
+.grid-img-wrap { overflow:hidden; position:relative; cursor:pointer; background:#0a0a0a; }
+.grid-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 500ms ease; display:block; }
+.grid-img-wrap:hover img { transform:scale(1.05); }
+
+/* Swap */
+.img-swap-wrap { position:relative; width:100%; height:100%; cursor:pointer; }
+.img-swap-wrap input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:10; width:100%; height:100%; }
+.img-swap-wrap img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 500ms ease; }
+.img-swap-wrap:hover img { transform:scale(1.04); }
+.swap-hint { position:absolute; inset:0; z-index:5; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55); opacity:0; transition:opacity 200ms ease; pointer-events:none; }
+.img-swap-wrap:hover .swap-hint { opacity:1; }
+.swap-hint span { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.8); font-weight:500; background:rgba(0,0,0,0.6); padding:6px 12px; border-radius:4px; border:0.5px solid rgba(255,255,255,0.2); }
+
+/* Equation */
+.equation-block { padding:96px 48px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:var(--bg); }
+.equation { font-family:var(--serif); font-size:clamp(22px,4vw,52px); font-weight:900; letter-spacing:-0.02em; line-height:1.2; color:var(--text-title); margin-bottom:32px; }
+.equation em { font-style:italic; color:var(--gold-light); }
+
+/* Text */
+.slide-eyebrow { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-label); font-weight:500; margin-bottom:14px; }
+.slide-title { font-family:var(--serif); font-size:clamp(26px,3.5vw,44px); font-weight:700; letter-spacing:-0.025em; line-height:1.0; color:var(--text-title); margin-bottom:16px; }
+.slide-title-xl { font-family:var(--serif); font-size:clamp(36px,5vw,64px); font-weight:900; letter-spacing:-0.03em; line-height:0.93; color:var(--text-title); margin-bottom:20px; }
+.slide-body { font-size:14px; line-height:1.75; color:var(--text-body); }
+.slide-caption { font-family:var(--serif); font-style:italic; font-size:16px; line-height:1.65; color:var(--text-sub); }
+.slide-grid-caption { font-size:14px; line-height:1.65; color:var(--text-body); text-align:center; max-width:900px; margin:0 auto; font-family:var(--serif); font-style:italic; }
+
+section { position:relative; z-index:2; }
+
+/* Modal */
+.img-modal { display:none; position:fixed; inset:0; z-index:9000; background:rgba(0,0,0,0.95); align-items:center; justify-content:center; }
+.img-modal.open { display:flex; }
+.img-modal img { max-width:92vw; max-height:92vh; border-radius:6px; }
+.img-modal-close { position:absolute; top:20px; right:28px; font-size:28px; color:rgba(255,255,255,0.5); cursor:pointer; background:none; border:none; transition:color 150ms; }
+.img-modal-close:hover { color:#fff; }
+
+/* Fade */
+.fi { opacity:0; transform:translateY(20px); transition:opacity 0.75s ease,transform 0.75s ease; }
+.fi.on { opacity:1; transform:none; }
+
+/* Footer */
+footer { padding:28px 48px; display:flex; align-items:center; justify-content:space-between; border-top:0.5px solid var(--border); position:relative; z-index:2; }
+footer p { font-size:12px; color:var(--text-label); }
+.f-links { display:flex; gap:24px; }
+.f-links a { font-size:12px; color:var(--text-label); text-decoration:none; letter-spacing:0.06em; text-transform:uppercase; transition:color 150ms; }
+.f-links a:hover { color:rgba(255,255,255,0.6); }
+
+/* HAMBURGER */
+.ham-btn { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:40px; height:40px; background:transparent; border:none; cursor:pointer; z-index:200; }
+.ham-btn span { display:block; width:22px; height:1.5px; background:rgba(255,255,255,0.75); transition:all 250ms ease; transform-origin:center; }
+.ham-btn.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.ham-btn.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.ham-btn.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display:none; position:fixed; top:60px; left:0; right:0; z-index:150; background:rgba(0,0,0,0.97); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border-bottom:0.5px solid var(--border); padding:16px 24px 24px; flex-direction:column; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-size:16px; color:var(--text-nav); text-decoration:none; padding:14px 0; border-bottom:0.5px solid var(--border); display:block; transition:color 150ms ease; letter-spacing:0.02em; }
+.mobile-menu a:last-child { border-bottom:none; }
+.mobile-menu a:hover { color:#fff; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  html, body { overflow-x:hidden; max-width:100vw; }
+  nav { padding:0 20px; }
+  .nav-pills { display:none; }
+  .nav-right { display:none; }
+  .ham-btn { display:flex; }
+  .portfolio-hero { padding:80px 20px 48px; min-height:42vh; }
+  .hero-title { font-size:clamp(40px,11vw,68px); line-height:0.9; }
+  .chapter-header { padding:52px 20px 28px; }
+  .chapter-title { font-size:clamp(28px,9vw,44px); }
+  .slide-split { grid-template-columns:1fr !important; min-height:auto; overflow:hidden; }
+  .slide-split.img-left .slide-img-wrap,
+  .slide-split.img-right .slide-img-wrap { min-height:0 !important; height:260px; max-height:260px; aspect-ratio:unset; order:-1; overflow:hidden; width:100%; max-width:100%; }
+  .slide-split .slide-img-wrap img { min-height:0 !important; width:100%; max-width:100%; height:100%; }
+  .slide-split .img-swap-wrap { min-height:0 !important; height:100% !important; max-width:100%; overflow:hidden; }
+  .slide-split .img-swap-wrap img { min-height:0 !important; }
+  .slide-split .slide-text { padding:28px 20px 36px; }
+  .slide-photogrid { padding:36px 20px; }
+  .photo-grid-3 { grid-template-columns:1fr 1fr; }
+  .photo-grid-2 { grid-template-columns:1fr; }
+  .photo-grid-panorama .top-row { grid-template-columns:1fr !important; }
+  .photo-grid-panorama .bottom-row { grid-template-columns:1fr 1fr; }
+  .slide-comparison { padding:36px 20px; }
+  .comparison-grid { grid-template-columns:1fr; }
+  .comparison-img-wrap { aspect-ratio:4/3; }
+  .comparison-pillars { grid-template-columns:1fr; }
+  .pillar-item { padding:18px 16px; }
+  .equation-block { padding:60px 20px; }
+  .equation { font-size:clamp(20px,6vw,32px); }
+  footer { flex-direction:column; gap:14px; padding:24px 20px; text-align:center; }
+  .f-links { gap:20px; justify-content:center; }
+}
+@media (max-width: 480px) {
+  .photo-grid-3 { grid-template-columns:1fr; }
+  .photo-grid-panorama .bottom-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo"><div class="logo-cube"><span>JB</span></div>Portfolio</a>
+  <div class="nav-pills">
+    <a href="index.html#sobre-mi" class="npill">Sobre mí</a>
+    <a href="portfolio_video.html" class="npill">Vídeos</a>
+    <a href="index.html#herramientas" class="npill">Herramientas</a>
+  </div>
+  <div class="nav-right"><a href="index.html#contact" class="nbtn-prism">Contáctame</a></div>
+  <button class="ham-btn" id="hamBtn" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#sobre-mi">Sobre mí</a>
+  <a href="portfolio_video.html">Vídeos</a>
+  <a href="index.html#herramientas">Herramientas</a>
+  <a href="index.html#contact">Contáctame</a>
+</div>
+
+<!-- HERO -->
+<div class="portfolio-hero" style="padding-top:60px">
+  <div class="hero-eyebrow">Portfolio Fotográfico · JB</div>
+  <h1 class="hero-title">Los instantes<br>que <em>duran</em><br>para siempre.</h1>
+  <p class="hero-subtitle">Tres series fotográficas sobre luz natural, geometría urbana y el cuarto oscuro digital. Pasa el cursor sobre cualquier foto para reemplazarla.</p>
+</div>
+<div class="prism-line"></div>
+
+
+<!-- ═══ PARTE 1: LA BÚSQUEDA DE LA LUZ ═══ -->
+<section id="busqueda-luz">
+
+  <div class="chapter-header fi">
+    <div class="chapter-tag">Portfolio · Primera Parte</div>
+    <h2 class="chapter-title">La Búsqueda<br>de la Luz</h2>
+    <p class="chapter-desc">No es geografía lo que se documenta aquí — es el comportamiento de los fotones al rozar la atmósfera, la tierra y la lente. Un estudio crónico de iluminación natural.</p>
+  </div>
+
+  <!-- Manifiesto split -->
+  <div class="slide-block slide-split img-left fi">
+    <div class="slide-img-wrap" style="min-height:500px">
+      <div class="img-swap-wrap" style="height:100%">
+        <input type="file" accept="image/*" onchange="swapImg(this)">
+        <img src="" alt="Columnas contra el sol" style="min-height:500px; background:#0d0d0d;">
+        <div class="swap-hint"><span>Cambiar foto</span></div>
+      </div>
+    </div>
+    <div class="slide-text">
+      <div class="slide-eyebrow">Manifiesto</div>
+      <h3 class="slide-title">El sujeto es secundario. El verdadero protagonista es la luz.</h3>
+      <p class="slide-body" style="margin-top:16px">La cámara no registra el paisaje — registra la calidad del aire y la densidad de la luz en el espacio intermedio entre la lente y el horizonte.</p>
+    </div>
+  </div>
+
+  <!-- Hora Dorada split -->
+  <div class="slide-block slide-split img-right fi">
+    <div class="slide-text" style="background:var(--surface)">
+      <div class="slide-eyebrow">Hora Dorada</div>
+      <h3 class="slide-title">La luz rasante esculpe lo que el sol de mediodía aplana.</h3>
+      <p class="slide-body" style="margin-top:16px">La trayectoria extendida a través de la atmósfera filtra las longitudes de onda cortas, revelando tonos cálidos y sombras alargadas. La arquitectura cobra relieve tridimensional y las sombras adquieren función narrativa.</p>
+    </div>
+    <div class="slide-img-wrap" style="min-height:480px">
+      <div class="img-swap-wrap" style="height:100%; min-height:480px">
+        <input type="file" accept="image/*" onchange="swapImg(this)">
+        <img src="" alt="Hora dorada" style="min-height:480px; background:#0d0d0d;">
+        <div class="swap-hint"><span>Cambiar foto</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 fotos: luz dura vs difusa -->
+  <div class="slide-block slide-photogrid fi">
+    <div class="comparison-header">
+      <div class="slide-eyebrow">Luz Directa vs. Difusa</div>
+      <h3 class="slide-title">Dos maneras de leer la misma luz</h3>
+    </div>
+    <div class="photo-grid-2">
+      <div class="grid-img-wrap" style="aspect-ratio:16/10">
+        <div class="img-swap-wrap" style="height:100%">
+          <input type="file" accept="image/*" onchange="swapImg(this)">
+          <img src="" alt="Luz dura" style="min-height:300px; background:#0d0d0d;">
+          <div class="swap-hint"><span>Cambiar foto</span></div>
+        </div>
+        <div class="comparison-label">Luz dura · Contraste extremo</div>
+      </div>
+      <div class="grid-img-wrap" style="aspect-ratio:16/10">
+        <div class="img-swap-wrap" style="height:100%">
+          <input type="file" accept="image/*" onchange="swapImg(this)">
+          <img src="" alt="Luz difusa" style="min-height:300px; background:#0d0d0d;">
+          <div class="swap-hint"><span>Cambiar foto</span></div>
+        </div>
+        <div class="comparison-label">Luz difusa · Atmósfera de quietud</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full bleed cierre -->
+  <div class="slide-block slide-full fi" style="min-height:55vh">
+    <div class="slide-img-wrap">
+      <div class="img-swap-wrap" style="height:100%">
+        <input type="file" accept="image/*" onchange="swapImg(this)">
+        <img src="" alt="Cielo crepuscular" style="min-height:55vh; background:#050305;">
+        <div class="swap-hint"><span>Cambiar foto</span></div>
+      </div>
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-text">
+      <h3 class="slide-title-xl">Refracción<br>y Melancolía</h3>
+      <p class="slide-caption" style="max-width:560px">Las partículas suspendidas —agua, polvo, aire— actúan como el modificador de luz natural definitivo. El paisaje respira.</p>
+    </div>
+  </div>
+
+  <!-- Ecuación -->
+  <div class="equation-block fi" style="border-bottom:0.5px solid var(--border)">
+    <div class="slide-eyebrow" style="margin-bottom:20px">La Ecuación Atmosférica</div>
+    <p class="equation">Luz (Fuente) + Tiempo (Ángulo)<br>+ Partículas (Atmósfera) = <em>Emoción</em></p>
+    <p class="slide-body" style="max-width:520px; text-align:center">El fotógrafo no captura el paisaje físico. Captura la calidad del aire.</p>
+  </div>
+
+</section>
+
+
+<!-- ═══ PARTE 2: GEOMETRÍA Y CIUDAD ═══ -->
+<section id="geometria-ciudad">
+
+  <div class="chapter-header fi">
+    <div class="chapter-tag">Portfolio · Segunda Parte</div>
+    <h2 class="chapter-title">Geometría<br>y Ciudad</h2>
+    <p class="chapter-desc">El ojo deja de registrar edificios y comienza a leer líneas, tensiones y pesos. La arquitectura como campo de fuerza visual.</p>
+  </div>
+
+  <!-- Panorama + 3 fotos -->
+  <div class="slide-block slide-photogrid fi">
+    <div class="photo-grid-panorama">
+      <div class="top-row">
+        <div class="grid-img-wrap" style="aspect-ratio:21/6">
+          <div class="img-swap-wrap" style="height:100%">
+            <input type="file" accept="image/*" onchange="swapImg(this)">
+            <img src="" alt="Skyline" style="min-height:220px; background:#050810;">
+            <div class="swap-hint"><span>Cambiar foto</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="grid-img-wrap" style="aspect-ratio:4/3">
+          <div class="img-swap-wrap" style="height:100%">
+            <input type="file" accept="image/*" onchange="swapImg(this)">
+            <img src="" alt="Columnas contrapicado" style="min-height:280px; background:#0d0a05;">
+            <div class="swap-hint"><span>Cambiar foto</span></div>
+          </div>
+        </div>
+        <div class="grid-img-wrap" style="aspect-ratio:4/3">
+          <div class="img-swap-wrap" style="height:100%">
+            <input type="file" accept="image/*" onchange="swapImg(this)">
+            <img src="" alt="Estatua en ventana" style="min-height:280px; background:#050808;">
+            <div class="swap-hint"><span>Cambiar foto</span></div>
+          </div>
+        </div>
+        <div class="grid-img-wrap" style="aspect-ratio:4/3">
+          <div class="img-swap-wrap" style="height:100%">
+            <input type="file" accept="image/*" onchange="swapImg(this)">
+            <img src="" alt="Escalera zenital" style="min-height:280px; background:#080808;">
+            <div class="swap-hint"><span>Cambiar foto</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="slide-grid-caption">El ojo deja de registrar edificios y comienza a leer líneas, tensiones y pesos.</p>
+  </div>
+
+  <!-- Split: peso histórico -->
+  <div class="slide-block slide-split img-left fi">
+    <div class="slide-img-wrap" style="min-height:500px">
+      <div class="img-swap-wrap" style="height:100%; min-height:500px">
+        <input type="file" accept="image/*" onchange="swapImg(this)">
+        <img src="" alt="Panteón de Agripa" style="min-height:500px; background:#0a0805;">
+        <div class="swap-hint"><span>Cambiar foto</span></div>
+      </div>
+    </div>
+    <div class="slide-text">
+      <div class="slide-eyebrow">Geometría y Ciudad</div>
+      <h3 class="slide-title">El peso histórico impone una lectura monumental</h3>
+      <p class="slide-body" style="margin-top:16px">La mirada debe navegar entre planos horizontales masivos y la verticalidad opresiva de la historia heredada, buscando el orden dentro de la inmensidad.</p>
+    </div>
+  </div>
+
+  <!-- 3 fotos: perspectiva y simetría -->
+  <div class="slide-block slide-photogrid fi">
+    <div class="comparison-header" style="margin-bottom:36px">
+      <div class="slide-eyebrow">Perspectiva y Simetría</div>
+      <h3 class="slide-title">Líneas de fuga y geometrías que crean vértigo</h3>
+      <p class="slide-body" style="margin-top:12px">Al alterar el eje de visión, la arquitectura funcional se despoja de su utilidad y se transforma en un ejercicio puro de geometría.</p>
+    </div>
+    <div class="photo-grid-3" style="margin-bottom:0">
+      <div class="grid-img-wrap" style="aspect-ratio:3/4">
+        <div class="img-swap-wrap" style="height:100%">
+          <input type="file" accept="image/*" onchange="swapImg(this)">
+          <img src="" alt="Línea de fuga" style="min-height:360px; background:#050810;">
+          <div class="swap-hint"><span>Cambiar foto</span></div>
+        </div>
+      </div>
+      <div class="grid-img-wrap" style="aspect-ratio:3/4">
+        <div class="img-swap-wrap" style="height:100%">
+          <input type="file" accept="image/*" onchange="swapImg(this)">
+          <img src="" alt="Hueco de escalera" style="min-height:360px; background:#050505;">
+          <div class="swap-hint"><span>Cambiar foto</span></div>
+        </div>
+      </div>
+      <div class="grid-img-wrap" style="aspect-ratio:3/4">
+        <div class="img-swap-wrap" style="height:100%">
+          <input type="file" accept="image/*" onchange="swapImg(this)">
+          <img src="" alt="Corredor con simetría" style="min-height:360px; background:#060606;">
+          <div class="swap-hint"><span>Cambiar foto</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full bleed cierre -->
+  <div class="slide-block slide-full fi" style="min-height:65vh; border-bottom:0.5px solid var(--border)">
+    <div class="slide-img-wrap">
+      <div class="img-swap-wrap" style="height:100%">
+        <input type="file" accept="image/*" onchange="swapImg(this)">
+        <img src="" alt="Atardecer urbano" style="min-height:65vh; background:#050305;">
+        <div class="swap-hint"><span>Cambiar foto</span></div>
+      </div>
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-text">
+      <h3 class="slide-title-xl">La estructura que<br>reaprendemos a mirar</h3>
+      <p class="slide-caption" style="max-width:500px">La ciudad es un lienzo continuo de líneas, luz y simetría, esperando a que el ojo se detenga lo suficiente para enmarcarlo.</p>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══ PARTE 3: ROMA PALIMPSEST ═══ -->
+<section id="roma-palimpsest">
+
+  <div class="chapter-header fi">
+    <div class="chapter-tag">Portfolio · Tercera Parte</div>
+    <h2 class="chapter-title">Roma<br><span style="color:var(--gold-light)">Palimpsest</span></h2>
+    <p class="chapter-desc">El revelado no es alteración — es arqueología digital. Tres ejes de intervención: Iluminación · Color · Contraste.</p>
+  </div>
+
+  <!-- Los 3 pilares -->
+  <div class="slide-block" style="padding:64px 48px; background:var(--surface)">
+    <div class="fi">
+      <h3 class="slide-title" style="margin-bottom:36px">El Método: tres pilares, una imagen</h3>
+      <div class="comparison-pillars" style="border-radius:12px; overflow:hidden">
+        <div class="pillar-item"><div class="pillar-tag">[ Iluminación ]</div><p class="pillar-text">Control geométrico de la luz: altas luces, sombras, direccionalidad y viñeteo.</p></div>
+        <div class="pillar-item"><div class="pillar-tag">[ Color ]</div><p class="pillar-text">Ingeniería cromática: balance de blancos, corrección HSL, split toning y saturación por canales.</p></div>
+        <div class="pillar-item"><div class="pillar-tag">[ Contraste ]</div><p class="pillar-text">Estructura y tacto: micro-contraste, curva de tonos, reducción de neblina y enfoque selectivo.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparación 1: Coliseo contraluz -->
+  <div class="slide-comparison fi">
+    <div class="comparison-header" style="padding:0 0 28px 0">
+      <div class="slide-eyebrow">Roma Palimpsest · 01</div>
+      <h3 class="slide-title">El contraluz revela la silueta geométrica y rescata el interior oculto</h3>
+      <p style="font-size:12px; color:var(--gold); letter-spacing:0.08em; margin-top:6px">Coliseo Romano</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Coliseo antes" style="min-height:300px; background:#050810;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Antes</div></div>
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Coliseo después" style="min-height:300px; background:#050810;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Después</div></div>
+    </div>
+    <div class="comparison-pillars" style="border-radius:8px; overflow:hidden">
+      <div class="pillar-item"><div class="pillar-tag">[Iluminación]</div><p class="pillar-text">Reducción del sol directo; apertura agresiva de sombras profundas para revelar la celosía de arcos interiores.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Color]</div><p class="pillar-text">Color grading Teal & Orange: el cielo pasa a aguamarina profundo, complementando el cálido resplandor del sol.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Contraste]</div><p class="pillar-text">Contraste global aumentado para siluetear con precisión la estructura masiva contra el horizonte.</p></div>
+    </div>
+  </div>
+
+  <!-- Comparación 2: Columnatas -->
+  <div class="slide-comparison fi">
+    <div class="comparison-header" style="padding:0 0 28px 0">
+      <div class="slide-eyebrow">Roma Palimpsest · 02</div>
+      <h3 class="slide-title">El destello solar y la manipulación de la neblina atmosférica</h3>
+      <p style="font-size:12px; color:var(--gold); letter-spacing:0.08em; margin-top:6px">Columnatas Antiguas</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Columnas antes" style="min-height:300px; background:#050808;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Antes</div></div>
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Columnas después" style="min-height:300px; background:#0a0603;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Después</div></div>
+    </div>
+    <div class="comparison-pillars" style="border-radius:8px; overflow:hidden">
+      <div class="pillar-item"><div class="pillar-tag">[Iluminación]</div><p class="pillar-text">El disco solar se expande y suaviza; sombras levantadas para recuperar el relieve cilíndrico de las columnas.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Color]</div><p class="pillar-text">Temperatura empujada hacia tonos de atardecer dorado; saturación del flare en cian para contraste visual.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Contraste]</div><p class="pillar-text">Dehaze con valores bajos para despejar la estructura, manteniendo el aura etérea en los bordes de la luz.</p></div>
+    </div>
+  </div>
+
+  <!-- Comparación 3: Castel Sant'Angelo noche -->
+  <div class="slide-comparison fi" style="border-bottom:0.5px solid var(--border)">
+    <div class="comparison-header" style="padding:0 0 28px 0">
+      <div class="slide-eyebrow">Roma Palimpsest · 03</div>
+      <h3 class="slide-title">Aislando la geometría defensiva del caos lumínico nocturno</h3>
+      <p style="font-size:12px; color:var(--gold); letter-spacing:0.08em; margin-top:6px">Castel Sant'Angelo de noche</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Castel antes" style="min-height:300px; background:#050302;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Antes</div></div>
+      <div class="comparison-img-wrap"><div class="img-swap-wrap" style="height:100%"><input type="file" accept="image/*" onchange="swapImg(this)"><img src="" alt="Castel después" style="min-height:300px; background:#050302;"><div class="swap-hint"><span>Cambiar</span></div></div><div class="comparison-label">Después</div></div>
+    </div>
+    <div class="comparison-pillars" style="border-radius:8px; overflow:hidden">
+      <div class="pillar-item"><div class="pillar-tag">[Iluminación]</div><p class="pillar-text">Reducción de la contaminación lumínica; brillo concentrado en el tambor cilíndrico y la estatua del ángel.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Color]</div><p class="pillar-text">El amarillo eléctrico del archivo se refina hacia un dorado profundo e imperial. Los negros se tiñen sutilmente en frío.</p></div>
+      <div class="pillar-item"><div class="pillar-tag">[Contraste]</div><p class="pillar-text">Nitidez aumentada en curvas de ladrillos y almenas. Las siluetas de transeúntes se vuelven formas puramente gráficas.</p></div>
+    </div>
+  </div>
+
+  <!-- Cita final -->
+  <div class="equation-block fi">
+    <div class="slide-eyebrow" style="margin-bottom:20px">Conclusión</div>
+    <p class="equation" style="font-weight:400; font-style:italic; font-size:clamp(18px,3vw,32px); color:var(--gold-light)">"La edición experta no altera la realidad,<br>restaura la percepción emocional humana."</p>
+    <p class="slide-body" style="max-width:560px; text-align:center; margin-top:24px">El sensor captura la geometría fría del momento; el cuarto oscuro digital rescata la historia de la piedra.</p>
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · Portfolio JB — Series fotográficas</p>
+  <div class="f-links">
+    <a href="https://github.com/jaimebrando98" target="_blank">GitHub</a>
+    <a href="https://www.instagram.com/jbphotografy98" target="_blank">Instagram</a>
+    <a href="https://www.linkedin.com/in/jaime-brando-medina-rojas/" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<div class="img-modal" id="imgModal">
+  <button class="img-modal-close" onclick="document.getElementById('imgModal').classList.remove('open')">✕</button>
+  <img id="imgModalSrc" src="" alt="">
+</div>
+
+<script>
+const hamBtn = document.getElementById('hamBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+hamBtn.addEventListener('click', () => { hamBtn.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamBtn.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }); }, { threshold:0.05 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+function swapImg(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = ev => { const img = input.closest('.img-swap-wrap').querySelector('img'); if (img) { img.src = ev.target.result; img.style.background = 'transparent'; } };
+  reader.readAsDataURL(input.files[0]);
+}
+
+document.querySelectorAll('.img-swap-wrap img').forEach(img => {
+  img.addEventListener('click', () => { if (!img.src || img.src.endsWith('#')) return; document.getElementById('imgModalSrc').src = img.src; document.getElementById('imgModal').classList.add('open'); });
+});
+document.getElementById('imgModal').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+</script>
+</body>
+</html>
