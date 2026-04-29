@@ -1324,33 +1324,26 @@ function renderSlot(slot, id) {
 
 /* ── CLICK HANDLER ── */
 function ytClick(slot) {
-  const rawUrl = slot.getAttribute('data-yt'); 
-  if (!rawUrl) return;
-  let videoId = "";
-  if (rawUrl.includes('v=')) {
-    videoId = rawUrl.split('v=')[1].split('&')[0];
-  } else if (rawUrl.includes('youtu.be/')) {
-    videoId = rawUrl.split('youtu.be/')[1].split('?')[0];
-  } else if (rawUrl.includes('shorts/')) {
-    videoId = rawUrl.split('shorts/')[1].split('?')[0];
-  }
+  const id = slot.dataset.ytId;
+  if (!id) return; // empty slot, do nothing
   const isReel = slot.dataset.reel === 'true';
   const wrap = document.getElementById('ytIframeWrap');
   const iframe = document.getElementById('ytIframe');
-  if (wrap) wrap.classList.toggle('reel-ratio', isReel);
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
+  wrap.classList.toggle('reel-ratio', isReel);
+  iframe.src = ytEmbedUrl(id);
   const modal = document.getElementById('ytModal');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
 function ytClose() {
   const modal = document.getElementById('ytModal');
   modal.classList.remove('open');
-  document.getElementById('ytIframe').src = ''; // Detiene el vídeo al cerrar
+  document.getElementById('ytIframe').src = ''; // stop video
   document.body.style.overflow = '';
+
 }
-document.addEventListener('keydown', e => { 
-  if (e.key === 'Escape') ytClose(); 
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') ytClose(); });
 
 /* ── FADE IN ── */
 const obs = new IntersectionObserver(entries => {
