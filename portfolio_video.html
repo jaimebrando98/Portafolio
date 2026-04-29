@@ -55,7 +55,19 @@ body::after {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100vh); }
 }
-
+/* Esto permite que el clic atraviese las capas decorativas */
+.media-overlay, 
+.hud-corner, 
+.slide-text,
+.chapter-header {
+  pointer-events: none; 
+}
+.yt-slot {
+  pointer-events: auto !important;
+  cursor: pointer;
+  z-index: 5;
+}
+  
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -812,7 +824,7 @@ footer p { font-size: 12px; color: var(--text-label); }
     </p>
   </div>
   <div class="media-side">
-    <div class="yt-slot empty-yt" id="about-media-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="min-height:400px;">
+    <div class="yt-slot" id="about-media-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="min-height:400px;">
       <div class="yt-empty-msg">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Vídeo
@@ -890,7 +902,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Premier Training: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="pt-hero-wrap" data-yt="https://www.youtube.com/watch?v=8MYuuwObSp0" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot" id="pt-hero-wrap" data-yt="https://www.youtube.com/watch?v=8MYuuwObSp0" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Premier Training
@@ -940,7 +952,7 @@ footer p { font-size: 12px; color: var(--text-label); }
   <div class="reel-strip-label">[Premier Training · Clips destacados]</div>
   <div class="reel-grid">
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="pt-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="pt-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">01</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -949,7 +961,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="pt-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="pt-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">02</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -958,7 +970,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="pt-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="pt-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">03</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -983,7 +995,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Graduación: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="grad-hero-wrap" data-yt="https://www.youtube.com/watch?v=fGQjyQLYk8k" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot" id="grad-hero-wrap" data-yt="https://www.youtube.com/watch?v=fGQjyQLYk8k" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Graduación 2014–2015
@@ -1035,7 +1047,7 @@ footer p { font-size: 12px; color: var(--text-label); }
   <div class="reel-strip-label">[Graduación 2014–2015 · Clips destacados]</div>
   <div class="reel-grid">
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="grad-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="grad-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">01</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1044,7 +1056,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="grad-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="grad-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">02</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1053,7 +1065,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="grad-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="grad-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">03</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1078,7 +1090,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Campaña: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="camp-hero-wrap" data-yt="https://www.youtube.com/watch?v=ASOYbsIFMug" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot" id="camp-hero-wrap" data-yt="https://www.youtube.com/watch?v=ASOYbsIFMug" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Campaña Promocional
@@ -1130,7 +1142,7 @@ footer p { font-size: 12px; color: var(--text-label); }
   <div class="reel-strip-label">[Campaña Promocional · Clips destacados]</div>
   <div class="reel-grid">
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="camp-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="camp-reel-1" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">01</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1139,7 +1151,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="camp-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="camp-reel-2" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">02</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1148,7 +1160,7 @@ footer p { font-size: 12px; color: var(--text-label); }
       </div>
     </div>
     <div class="reel-slot">
-      <div class="yt-slot empty-yt" id="camp-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
+      <div class="yt-slot" id="camp-reel-3" data-yt="" data-reel="true" onclick="ytClick(this)">
         <div class="reel-num">03</div>
         <div class="yt-empty-msg">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
@@ -1173,7 +1185,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Conciliación: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="conc-hero-wrap" data-yt="https://www.youtube.com/watch?v=z2C0-O2WGdM" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot" id="conc-hero-wrap" data-yt="https://www.youtube.com/watch?v=z2C0-O2WGdM" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Conciliación
@@ -1324,8 +1336,8 @@ function renderSlot(slot, id) {
 
 /* ── CLICK HANDLER ── */
 function ytClick(slot) {
-  const url = slot.dataset.ytId;
-  if (!url) return; // empty slot, do nothing
+  const url = slot.getAttribute('data-yt'); 
+  if (!url) return;
   let id = "";
   if (url.includes('v=')) {
     id = url.split('v=')[1].split('&')[0];
@@ -1338,17 +1350,16 @@ function ytClick(slot) {
   
   if (wrap) wrap.classList.toggle('reel-ratio', isReel);
   iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`;
+  
   const modal = document.getElementById('ytModal');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function ytClose() {
   const modal = document.getElementById('ytModal');
   modal.classList.remove('open');
   document.getElementById('ytIframe').src = ''; // stop video
   document.body.style.overflow = '';
-
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') ytClose(); });
 
