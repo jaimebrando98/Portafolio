@@ -529,36 +529,44 @@ footer p { font-size: 12px; color: var(--text-label); }
 .f-links a:hover { color: rgba(255,255,255,0.6); }
 
 /* ── LIGHTBOX MODAL ── */
-.media-modal {
+.yt-modal {
   display: none; position: fixed; inset: 0; z-index: 9000;
   align-items: center; justify-content: center;
 }
-.media-modal.open { display: flex; }
-.modal-backdrop {
+.yt-modal.open { display: flex; }
+.yt-backdrop {
   position: absolute; inset: 0;
   background: rgba(0,0,0,0.0);
   backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
   transition: background 400ms ease, backdrop-filter 400ms ease, -webkit-backdrop-filter 400ms ease;
 }
-.media-modal.open .modal-backdrop {
+.yt-modal.open .yt-backdrop {
   background: rgba(0,0,0,0.88);
   backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
 }
-.modal-content {
+.yt-modal-inner {
   position: relative; z-index: 2;
   opacity: 0; transform: scale(0.92);
   transition: opacity 350ms ease 50ms, transform 350ms ease 50ms;
 }
-.media-modal.open .modal-content { opacity: 1; transform: scale(1); }
-.media-modal img, .media-modal video { max-width: 90vw; max-height: 88vh; border-radius: 8px; display: block; box-shadow: 0 32px 80px rgba(0,0,0,0.7); }
-.media-modal-close {
+.yt-modal.open .yt-modal-inner { opacity: 1; transform: scale(1); }
+#ytIframe {
+  width: 85vw; 
+  height: 47.8vw;
+  max-height: 80vh;
+  border-radius: 8px; 
+  display: block; 
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  border: none;
+}
+.yt-modal-close {
   position: absolute; top: -44px; right: 0; font-size: 22px;
   color: rgba(255,255,255,0.5); cursor: pointer; background: rgba(255,255,255,0.07);
   border: 0.5px solid rgba(255,255,255,0.12); border-radius: 50%;
   width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
   transition: all 150ms; line-height: 1;
 }
-.media-modal-close:hover { color: #fff; background: rgba(255,255,255,0.15); }
+.yt-modal-close:hover { color: #fff; background: rgba(255,255,255,0.15); }
 
 /* ── LIGHTBOX CLICK HINT ── */
 .media-swap-wrap { cursor: pointer; }
@@ -1238,8 +1246,9 @@ footer p { font-size: 12px; color: var(--text-label); }
   <div class="yt-modal-inner">
     <button class="yt-modal-close" onclick="ytClose()">✕</button>
     <div class="yt-iframe-wrap" id="ytIframeWrap">
-    <iframe id="ytIframe" src="" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
-  </div>
+      <iframe id="ytIframe" src="" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>  
 </div>
 
 <script>
