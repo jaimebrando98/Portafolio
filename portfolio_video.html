@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio de Vídeo — JB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #000000;
+  --surface:    #0c0c0c;
+  --text-title: #FFFFFF;
+  --text-sub:   rgba(255,255,255,0.55);
+  --text-body:  rgba(255,255,255,0.35);
+  --text-label: rgba(255,255,255,0.28);
+  --text-nav:   rgba(255,255,255,0.60);
+  --border:     rgba(255,255,255,0.07);
+  --border-md:  rgba(255,255,255,0.12);
+  --cyan:       #00CFFF;
+  --cyan-dim:   rgba(0,207,255,0.25);
+  --amber:      #FF6B00;
+  --serif:      'Playfair Display', serif;
+  --sans:       'Inter', sans-serif;
+  --prism: linear-gradient(90deg,#FF2D2D,#FF6B00,#FFD600,#00FF6A,#00CFFF,#2060FF,#8B2FFF,#FF2D2D);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text-title);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+@keyframes prism-move {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--border);
+}
+.logo {
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
+  display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text-title);
+}
+.logo-cube {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(145deg,#1a1a1a,#080808);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.logo-cube::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--prism); background-size: 200%; animation: prism-move 3s linear infinite;
+}
+.logo-cube span { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8); z-index: 1; }
+
+.nav-pills {
+  display: flex; align-items: center; gap: 2px;
+  background: rgba(255,255,255,0.03); border: 0.5px solid var(--border);
+  border-radius: 100px; padding: 3px;
+}
+.npill {
+  font-size: 13px; color: var(--text-nav); padding: 6px 18px; border-radius: 100px;
+  cursor: pointer; transition: all 150ms ease; text-decoration: none; border: none; background: transparent;
+}
+.npill:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.npill.active { color: #fff; background: rgba(255,255,255,0.07); border: 0.5px solid var(--border-md); }
+
+.nav-right { display: flex; gap: 8px; align-items: center; }
+.nbtn-prism {
+  font-family: var(--sans); font-size: 13px; color: #fff;
+  background: rgba(255,255,255,0.05); padding: 8px 20px; border-radius: 100px;
+  cursor: pointer; border: none; position: relative; overflow: hidden;
+  transition: all 150ms ease; text-decoration: none; display: inline-block;
+}
+.nbtn-prism::before {
+  content: ''; position: absolute; inset: 0; border-radius: 100px; padding: 1px;
+  background: var(--prism); background-size: 200%; animation: prism-move 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* ── PRISM LINE ── */
+.prism-line {
+  width: 100%; height: 1px;
+  background: var(--prism); background-size: 300%;
+  animation: prism-move 4s linear infinite;
+}
+
+/* ── HERO ── */
+.portfolio-hero {
+  min-height: 60vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 60px 48px 72px;
+  position: relative; overflow: hidden;
+  border-bottom: 0.5px solid var(--border);
+}
+.portfolio-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(0,207,255,0.05) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 40% at 80% 30%, rgba(255,107,0,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Grid overlay HUD lines */
+.portfolio-hero::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+  background-image:
+    linear-gradient(rgba(0,207,255,0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,207,255,0.8) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.hud-rec {
+  position: absolute; top: 80px; right: 48px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); font-family: monospace;
+}
+.hud-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #FF2D2D;
+  animation: blink 1.2s step-end infinite;
+}
+.hud-timecode {
+  position: absolute; bottom: 80px; left: 48px;
+  font-family: monospace; font-size: 11px; letter-spacing: 0.12em;
+  color: var(--cyan); opacity: 0.7;
+}
+
+.hero-eyebrow {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); font-weight: 500; margin-bottom: 20px;
+  position: relative; z-index: 2;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(60px, 9vw, 120px);
+  font-weight: 900; line-height: 0.88; letter-spacing: -0.03em;
+  color: var(--text-title); max-width: 900px; margin-bottom: 28px;
+  position: relative; z-index: 2;
+}
+.hero-title em { font-style: italic; color: var(--cyan); }
+.hero-subtitle {
+  font-size: 14px; line-height: 1.7; color: var(--text-body); max-width: 520px;
+  position: relative; z-index: 2;
+}
+
+/* ── CHAPTER DIVIDERS ── */
+.chapter-header {
+  padding: 80px 48px 40px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+.chapter-tag {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cyan); font-weight: 500; margin-bottom: 12px;
+}
+.chapter-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 0.95;
+  color: var(--text-title);
+}
+.chapter-desc {
+  font-size: 13px; color: var(--text-body); line-height: 1.7;
+  max-width: 600px; margin-top: 16px;
+}
+
+/* ── PROJECT HERO BLOCK ── */
+.project-hero {
+  min-height: 65vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  overflow: hidden; position: relative;
+  border-bottom: 0.5px solid var(--border);
+}
+.project-hero .media-wrap {
+  position: absolute; inset: 0; z-index: 0;
+}
+.project-hero .media-wrap img,
+.project-hero .media-wrap video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.project-hero .media-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  z-index: 1;
+}
+.project-hero .hud-corner {
+  position: absolute; top: 24px; right: 24px; z-index: 3;
+  font-family: monospace; font-size: 10px; letter-spacing: 0.1em;
+  color: rgba(0,207,255,0.7); text-align: right; line-height: 1.6;
+}
+.project-hero .slide-text {
+  position: relative; z-index: 2;
+  padding: 48px 48px 56px;
+}
+
+/* Swappable media (image or video) */
+.media-swap-wrap {
+  position: relative; width: 100%; height: 100%;
+}
+.media-swap-wrap input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 10;
+  width: 100%; height: 100%;
+}
+.media-swap-wrap img,
+.media-swap-wrap video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.media-swap-wrap .swap-hint {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.media-swap-wrap:hover .swap-hint { opacity: 1; }
+.media-swap-wrap.empty-slot {
+  background: #050a0f;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100%;
+}
+.media-swap-wrap.empty-slot .swap-hint { opacity: 1; background: transparent; }
+.swap-hint span {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.8); font-weight: 500;
+  background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 4px;
+  border: 0.5px solid rgba(255,255,255,0.2);
+}
+.empty-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%; min-height: 400px;
+  border: 1px dashed rgba(0,207,255,0.2); border-radius: 4px;
+  color: rgba(0,207,255,0.4); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; gap: 12px;
+}
+.empty-placeholder svg { opacity: 0.4; }
+
+/* ── QUOTE SLIDE ── */
+.slide-quote {
+  padding: 96px 48px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg); border-bottom: 0.5px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.slide-quote::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,207,255,0.03) 0%, transparent 60%);
+}
+.slide-quote-text {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 400; font-style: italic;
+  line-height: 1.3; color: var(--text-sub);
+  text-align: center; max-width: 820px;
+  position: relative; z-index: 2;
+}
+.slide-quote-attr {
+  font-family: monospace; font-size: 11px; letter-spacing: 0.14em;
+  color: var(--cyan); margin-top: 28px; position: relative; z-index: 2;
+}
+
+/* ── ABOUT / ECOSYSTEM SPLIT ── */
+.slide-split {
+  display: grid;
+  min-height: 60vh;
+  border-bottom: 0.5px solid var(--border);
+}
+.slide-split.img-left  { grid-template-columns: 55% 45%; }
+.slide-split.img-right { grid-template-columns: 45% 55%; }
+.slide-split .media-side { overflow: hidden; position: relative; }
+.slide-split .media-side img,
+.slide-split .media-side video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 600ms ease;
+}
+.slide-split:hover .media-side img { transform: scale(1.03); }
+.slide-split .text-side {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 56px 52px; background: var(--bg);
+}
+
+/* ── ECOSYSTEM / TOOLS GRID ── */
+.ecosystem-section {
+  padding: 80px 48px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+}
+.ecosystem-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900; letter-spacing: -0.03em;
+  text-align: center; margin-bottom: 60px;
+}
+.ecosystem-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+.eco-card {
+  background: var(--bg); padding: 48px 36px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 20px;
+}
+.eco-icon-wrap {
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 1px solid var(--border-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; position: relative;
+}
+.eco-icon-wrap.cyan-ring { border-color: rgba(0,207,255,0.3); box-shadow: 0 0 20px rgba(0,207,255,0.08); }
+.eco-icon-wrap.amber-ring { border-color: rgba(255,107,0,0.3); box-shadow: 0 0 20px rgba(255,107,0,0.08); }
+.eco-icon-wrap.prism-ring {
+  border-color: transparent;
+  background: linear-gradient(var(--bg), var(--bg)) padding-box,
+              var(--prism) border-box;
+  background-size: 200%;
+  animation: prism-move 3s linear infinite;
+}
+.eco-name {
+  font-size: 15px; font-weight: 600; color: var(--text-title); margin-bottom: 4px;
+}
+.eco-desc {
+  font-size: 13px; color: var(--text-body); line-height: 1.65;
+}
+.eco-connector {
+  display: flex; align-items: center; justify-content: center;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 10px; height: 10px; background: var(--cyan); border-radius: 50%;
+}
+
+/* ── THREE REGISTERS ── */
+.registers-section {
+  padding: 80px 48px;
+  border-bottom: 0.5px solid var(--border);
+}
+.registers-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900; letter-spacing: -0.03em;
+  text-align: center; margin-bottom: 48px;
+}
+.registers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 3px; border-radius: 12px; overflow: hidden;
+}
+.register-card {
+  background: var(--surface); padding: 40px 32px;
+  display: flex; flex-direction: column; gap: 16px;
+  border: 0.5px solid var(--border); position: relative; overflow: hidden;
+  transition: background 200ms ease;
+}
+.register-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.register-card.ritmo::before { background: var(--cyan); }
+.register-card.emocion::before { background: linear-gradient(90deg, #FF6B00, #FFD600); }
+.register-card.impacto::before { background: var(--prism); background-size: 200%; animation: prism-move 3s linear infinite; }
+.register-card:hover { background: #111; }
+
+.register-project-tag {
+  font-family: monospace; font-size: 10px; letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+.register-card.ritmo .register-project-tag { color: var(--cyan); }
+.register-card.emocion .register-project-tag { color: #FFD600; }
+.register-card.impacto .register-project-tag { color: #8B2FFF; }
+
+.register-name {
+  font-family: var(--serif); font-size: 28px; font-weight: 900;
+  letter-spacing: -0.02em; color: var(--text-title);
+}
+.register-desc {
+  font-size: 13px; color: var(--text-body); line-height: 1.65;
+}
+
+/* ── TIMELINE ANATOMY ── */
+.anatomy-section {
+  padding: 80px 48px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+}
+.anatomy-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 60px;
+}
+.anatomy-title {
+  font-family: var(--serif); font-size: clamp(24px, 3vw, 40px);
+  font-weight: 900; letter-spacing: -0.03em;
+}
+.anatomy-timecode {
+  font-family: monospace; font-size: 12px; letter-spacing: 0.12em; color: var(--cyan);
+}
+.timeline-bar {
+  width: 100%; height: 6px; background: rgba(255,255,255,0.06);
+  border-radius: 3px; position: relative; margin-bottom: 40px;
+}
+.timeline-bar::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--cyan), rgba(0,207,255,0.2));
+  border-radius: 3px; width: 60%;
+}
+.timeline-markers {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.timeline-marker { position: relative; }
+.marker-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  margin-bottom: 16px;
+}
+.ritmo .marker-dot { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+.emocion .marker-dot { background: #FFD600; box-shadow: 0 0 12px rgba(255,214,0,0.5); }
+.impacto .marker-dot { background: #8B2FFF; box-shadow: 0 0 12px rgba(139,47,255,0.5); }
+
+.marker-time {
+  font-family: monospace; font-size: 11px; letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.ritmo .marker-time { color: var(--cyan); }
+.emocion .marker-time { color: #FFD600; }
+.impacto .marker-time { color: #8B2FFF; }
+
+.marker-name {
+  font-size: 14px; font-weight: 600; color: var(--text-title); margin-bottom: 8px;
+}
+.marker-desc {
+  font-size: 12px; color: var(--text-body); line-height: 1.6; font-family: monospace;
+}
+
+/* ── TEXT ELEMENTS ── */
+.slide-eyebrow {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-label); font-weight: 500; margin-bottom: 14px;
+}
+.slide-title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1.0;
+  color: var(--text-title); margin-bottom: 16px;
+}
+.slide-title-accent { color: var(--cyan); }
+.slide-body {
+  font-size: 14px; line-height: 1.75; color: var(--text-body);
+}
+
+/* ── CONTACT CTA ── */
+.cta-section {
+  padding: 120px 48px;
+  text-align: center; position: relative; overflow: hidden;
+  border-top: 0.5px solid var(--border);
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(255,45,45,0.06) 0%, transparent 60%);
+}
+.cta-rec-btn {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,45,45,0.08); border: 2px solid rgba(255,45,45,0.4);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 48px; position: relative; z-index: 2;
+  box-shadow: 0 0 40px rgba(255,45,45,0.12);
+}
+.cta-rec-inner {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7);
+}
+.cta-rec-dot { width: 10px; height: 10px; border-radius: 50%; background: #FF2D2D; animation: blink 1.2s step-end infinite; }
+.cta-title {
+  font-family: var(--serif); font-size: clamp(40px, 6vw, 80px);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 0.9;
+  margin-bottom: 20px; position: relative; z-index: 2;
+}
+.cta-sub { font-size: 14px; color: var(--text-body); margin-bottom: 56px; position: relative; z-index: 2; }
+.cta-contacts {
+  display: flex; align-items: center; justify-content: center; gap: 48px;
+  position: relative; z-index: 2;
+}
+.cta-contact-item { display: flex; flex-direction: column; gap: 6px; }
+.cta-contact-val { font-size: 15px; font-weight: 500; color: var(--text-title); }
+.cta-contact-lbl {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-label);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 24px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 0.5px solid var(--border); position: relative; z-index: 2;
+}
+footer p { font-size: 12px; color: var(--text-label); }
+.f-links { display: flex; gap: 24px; }
+.f-links a {
+  font-size: 12px; color: var(--text-label); text-decoration: none;
+  letter-spacing: 0.06em; text-transform: uppercase; transition: color 150ms ease;
+}
+.f-links a:hover { color: rgba(255,255,255,0.6); }
+
+/* ── LIGHTBOX MODAL ── */
+.media-modal {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  align-items: center; justify-content: center;
+}
+.media-modal.open { display: flex; }
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.0);
+  backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+  transition: background 400ms ease, backdrop-filter 400ms ease, -webkit-backdrop-filter 400ms ease;
+}
+.media-modal.open .modal-backdrop {
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.modal-content {
+  position: relative; z-index: 2;
+  opacity: 0; transform: scale(0.92);
+  transition: opacity 350ms ease 50ms, transform 350ms ease 50ms;
+}
+.media-modal.open .modal-content { opacity: 1; transform: scale(1); }
+.media-modal img, .media-modal video { max-width: 90vw; max-height: 88vh; border-radius: 8px; display: block; box-shadow: 0 32px 80px rgba(0,0,0,0.7); }
+.media-modal-close {
+  position: absolute; top: -44px; right: 0; font-size: 22px;
+  color: rgba(255,255,255,0.5); cursor: pointer; background: rgba(255,255,255,0.07);
+  border: 0.5px solid rgba(255,255,255,0.12); border-radius: 50%;
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  transition: all 150ms; line-height: 1;
+}
+.media-modal-close:hover { color: #fff; background: rgba(255,255,255,0.15); }
+
+/* ── LIGHTBOX CLICK HINT ── */
+.media-swap-wrap { cursor: pointer; }
+.media-swap-wrap.empty-slot { cursor: default; }
+.lightbox-hint {
+  position: absolute; inset: 0; z-index: 6;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 200ms ease; pointer-events: none;
+  background: rgba(0,0,0,0.35);
+}
+.lightbox-hint svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8)); }
+.media-swap-wrap:not(.empty-slot):hover .lightbox-hint { opacity: 1; }
+
+/* ── REEL STRIP ── */
+.reel-strip {
+  padding: 40px 48px 56px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--bg);
+}
+.reel-strip-label {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-label); margin-bottom: 20px; font-weight: 500;
+}
+.reel-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.reel-slot {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #080808; border: 0.5px solid var(--border);
+  aspect-ratio: 9/16; cursor: pointer;
+  transition: border-color 250ms ease, transform 200ms ease;
+}
+.reel-slot:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.reel-slot .media-swap-wrap {
+  position: absolute; inset: 0; height: 100%;
+}
+.reel-slot .empty-placeholder {
+  min-height: 100%; font-size: 10px; border: none;
+  color: rgba(255,255,255,0.2);
+}
+.reel-slot .empty-placeholder svg { opacity: 0.25; width: 28px; height: 28px; }
+.reel-slot .media-swap-wrap img,
+.reel-slot .media-swap-wrap video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.reel-num {
+  position: absolute; top: 10px; left: 12px; z-index: 7;
+  font-family: monospace; font-size: 9px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35); pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .reel-strip { padding: 28px 20px 40px; }
+  .reel-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+}
+
+/* ── FADE IN ── */
+.fi { opacity: 0; transform: translateY(18px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.fi.on { opacity: 1; transform: none; }
+
+/* ── BACK BADGE ── */
+.back-to-index {
+  position: absolute; top: 80px; left: 48px; z-index: 3;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color 150ms ease;
+}
+.back-to-index:hover { color: rgba(255,255,255,0.8); }
+.back-to-index::before { content: '←'; }
+
+/* ── HAMBURGER MENU ── */
+.ham-btn {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 40px; height: 40px; cursor: pointer;
+  background: transparent; border: none; padding: 4px; z-index: 200;
+}
+.ham-btn span {
+  display: block; width: 22px; height: 1.5px;
+  background: rgba(255,255,255,0.7);
+  transition: all 250ms ease; transform-origin: center;
+}
+.ham-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.ham-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.ham-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed; top: 60px; left: 0; right: 0; z-index: 150;
+  background: rgba(0,0,0,0.97);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 20px 24px 28px;
+  flex-direction: column; gap: 4px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 16px; color: var(--text-nav); text-decoration: none;
+  padding: 14px 0; border-bottom: 0.5px solid var(--border);
+  display: block; transition: color 150ms ease;
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: #fff; }
+
+/* ── RESPONSIVE MÓVIL — portfolio_video.html ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-pills { display: none; }
+  .nav-right { display: none; }
+  .ham-btn { display: flex; }
+
+  /* Hero */
+  .portfolio-hero { padding: 80px 20px 48px; min-height: 50vh; }
+  .hero-title { font-size: clamp(42px, 11vw, 72px); }
+  .hud-rec { right: 20px; top: 70px; }
+  .hud-timecode { left: 20px; }
+  .back-to-index { left: 20px; top: 70px; }
+
+  /* Chapter headers */
+  .chapter-header { padding: 48px 20px 24px; }
+
+  /* Slide split */
+  .slide-split { grid-template-columns: 1fr !important; min-height: auto; }
+  .slide-split .media-side { min-height: 260px; }
+  .slide-split .text-side { padding: 32px 20px; }
+
+  /* Ecosystem */
+  .ecosystem-section { padding: 48px 20px; }
+  .ecosystem-grid { grid-template-columns: 1fr; }
+
+  /* Three registers */
+  .registers-section { padding: 48px 20px; }
+  .registers-grid { grid-template-columns: 1fr !important; }
+
+  /* Timeline anatomy */
+  .anatomy-section { padding: 48px 20px; }
+  .anatomy-header { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .timeline-markers { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Project hero text */
+  .project-hero .slide-text { padding: 40px 20px 48px; }
+  .project-hero .hud-corner { display: none; }
+
+  /* Slide quote */
+  .slide-quote { padding: 60px 20px; }
+
+  /* CTA */
+  .cta-section { padding: 80px 20px; }
+  .cta-contacts { flex-direction: column; gap: 28px; }
+  .cta-contact-val { font-size: 14px; }
+
+  /* Footer */
+  footer { flex-direction: column; gap: 16px; padding: 24px 20px; text-align: center; }
+  .f-links { gap: 20px; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-cube"><span>JB</span></div>
+    Portfolio
+  </a>
+  <div class="nav-pills">
+    <a href="index.html#sobre-mi" class="npill">Sobre mí</a>
+    <a href="portfolio_gallery.html" class="npill">Fotos</a>
+    <a href="index.html#herramientas" class="npill">Herramientas</a>
+  </div>
+  <div class="nav-right">
+    <a href="index.html#contact" class="nbtn-prism">Contáctame</a>
+  </div>
+  <button class="ham-btn" id="hamBtn" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#sobre-mi">Sobre mí</a>
+  <a href="portfolio_gallery.html">Fotos</a>
+  <a href="index.html#herramientas">Herramientas</a>
+  <a href="#conciliacion">Conciliación</a>
+  <a href="index.html#contact">Contáctame</a>
+</div>
+
+<!-- HERO -->
+<section class="portfolio-hero">
+  <a href="index.html" class="back-to-index">Portfolio</a>
+  <div class="hud-rec">
+    <div class="hud-dot"></div>
+    REC
+  </div>
+  <div class="hud-timecode" id="timecodeHero">TIMECODE: 00:00:00:01</div>
+
+  <div class="hero-eyebrow fi">Portfolio de Vídeo — JB</div>
+  <h1 class="hero-title fi">
+    Un recuerdo<br>del <em>presente</em>
+  </h1>
+  <p class="hero-subtitle fi">Los instantes pueden durar para siempre. Montaje deportivo, storytelling íntimo y campañas con impacto metropolitano.</p>
+</section>
+
+<div class="prism-line"></div>
+
+<!-- QUOTE: EISENSTAEDT -->
+<div class="slide-quote fi">
+  <p class="slide-quote-text">"Lo más importante no es la cámara, sino el ojo."</p>
+  <div class="slide-quote-attr">— Alfred Eisenstaedt · PROJECT: CINEMATIC VISION · SEQ: EDIT 01 - FINAL</div>
+</div>
+
+<!-- ABOUT: EL COMIENZO -->
+<section class="slide-split img-right fi">
+  <div class="text-side">
+    <div class="slide-eyebrow">[Capítulo 1: El Origen]</div>
+    <h2 class="slide-title">El comienzo de la visión</h2>
+    <p class="slide-body">
+      Todo empezó con un Nokia 6230. La pasión por plasmar instantes que de otra manera se perderían en la memoria creció con el tiempo. Desde las primeras fotos y la llegada de Instagram, hasta la edición avanzada de proyectos. El equipo evolucionó, la resolución se expandió — de 640×480 px hasta 4K — pero el amor por capturar recuerdos sigue siendo el mismo.
+    </p>
+  </div>
+  <div class="media-side">
+    <div class="media-swap-wrap empty-slot" id="about-media-wrap">
+      <div class="swap-hint">
+        <div class="empty-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
+          Subir vídeo
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section class="ecosystem-section fi">
+  <h2 class="ecosystem-title">Ecosistema de Producción y Color</h2>
+  <div class="ecosystem-grid">
+    <div class="eco-card">
+      <div class="eco-icon-wrap cyan-ring">📷</div>
+      <div>
+        <div class="eco-name">Captura</div>
+        <div class="eco-desc">Cuerpos de cámara principales. Dominio de ópticas: focal fija, zoom y macro para adaptarse a la necesidad narrativa.</div>
+      </div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-icon-wrap amber-ring">🎨</div>
+      <div>
+        <div class="eco-name">Post-Producción Visual</div>
+        <div class="eco-desc">Adobe Photoshop y Lightroom. Tratamiento de imagen, texturas y creación de atmósferas visuales estáticas.</div>
+      </div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-icon-wrap prism-ring">🎬</div>
+      <div>
+        <div class="eco-name">Montaje y Etalonaje</div>
+        <div class="eco-desc">DaVinci Resolve. El núcleo narrativo. Precisión absoluta en corrección de color, ritmo de corte y fluidez audiovisual.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE REGISTERS -->
+<section class="registers-section fi">
+  <h2 class="registers-title">Cuatro Registros. Una Sola Visión.</h2>
+  <div class="registers-grid" style="grid-template-columns: repeat(4,1fr);">
+    <div class="register-card ritmo">
+      <div class="register-project-tag">Proyecto: Premier Training</div>
+      <div class="register-name">RITMO</div>
+      <div class="register-desc">Dinamismo puro. Montaje deportivo y urbano donde la adrenalina dicta el corte.</div>
+    </div>
+    <div class="register-card emocion">
+      <div class="register-project-tag">Proyecto: Graduación</div>
+      <div class="register-name">EMOCIÓN</div>
+      <div class="register-desc">Storytelling íntimo. Uso de testimonios y silencios para evocar nostalgia humana.</div>
+    </div>
+    <div class="register-card impacto">
+      <div class="register-project-tag">Proyecto: Campaña Ayuso</div>
+      <div class="register-name">IMPACTO</div>
+      <div class="register-desc">Escala masiva. Mensajes directos y persuasivos diseñados para la retención y la acción.</div>
+    </div>
+    <div class="register-card" style="border-top: 2px solid #00FF6A;">
+      <div class="register-project-tag" style="color:#00FF6A;">Proyecto: Conciliación</div>
+      <div class="register-name">EQUILIBRIO</div>
+      <div class="register-desc">Narrativa íntima. Planos contemplativos que armonizan los mundos personal y profesional.</div>
+    </div>
+  </div>
+</section>
+
+<div class="prism-line"></div>
+
+<!-- ══════════════════════════════════════
+     CAPÍTULO 1: PREMIER TRAINING
+══════════════════════════════════════ -->
+<div class="chapter-header fi">
+  <div class="chapter-tag">[Registro 01 · Ritmo]</div>
+  <h2 class="chapter-title">Premier Training</h2>
+  <p class="chapter-desc">Montaje Deportivo y Ritmo Urbano — Una pieza dinámica que captura la intensidad de atletas internacionales en el corazón de Madrid. Énfasis en el acondicionamiento físico y la técnica de campo a través de cortes rápidos, percusión contundente y estética urbana.</p>
+</div>
+
+<!-- Premier Training: Hero media -->
+<div class="project-hero fi" style="min-height: 65vh;">
+  <div class="media-wrap">
+    <div class="media-swap-wrap empty-slot" id="pt-hero-wrap" style="height:100%; min-height:65vh;">
+      <div class="swap-hint">
+        <div class="empty-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
+          Subir vídeo principal
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="media-overlay"></div>
+  <div class="hud-corner">PROJECT: PREMIER TRAINING<br>SER: EDIT 03 - WORKFLOW<br>TRT: 01:15:00</div>
+  <div class="slide-text">
+    <div class="slide-eyebrow">[Montaje Deportivo]</div>
+    <h3 class="slide-title"><span class="slide-title-accent">Premier Training</span></h3>
+    <p class="slide-body" style="max-width: 640px;">Una pieza dinámica que captura la intensidad de atletas internacionales en el corazón de Madrid. Énfasis en el acondicionamiento físico y la técnica de campo a través de cortes rápidos, percusión contundente y estética urbana.</p>
+  </div>
+</div>
+
+<!-- Premier Training: Anatomy -->
+<div class="anatomy-section fi">
+  <div class="anatomy-header">
+    <h3 class="anatomy-title">Anatomía del Montaje</h3>
+    <div class="anatomy-timecode">TIMECODE: 02:45:00</div>
+  </div>
+  <div class="timeline-bar"></div>
+  <div class="timeline-markers">
+    <div class="timeline-marker ritmo">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[00:15]</div>
+      <div class="marker-name">Construcción de Tensión</div>
+      <div class="marker-desc">Sincronización milimétrica de cortes con la percusión del beat. El ritmo visual emula el esfuerzo físico del gimnasio.</div>
+    </div>
+    <div class="timeline-marker emocion">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[01:12]</div>
+      <div class="marker-name">Contraste de Acción</div>
+      <div class="marker-desc">Transición fluida entre la intensidad cerrada del entrenamiento de fuerza y la amplitud táctica en el campo de juego.</div>
+    </div>
+    <div class="timeline-marker impacto">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[02:30]</div>
+      <div class="marker-name">Cierre de Energía</div>
+      <div class="marker-desc">Montaje frenético que acelera progresivamente hasta culminar en un corte seco con el logotipo del programa.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Premier Training: Reels -->
+<div class="reel-strip fi">
+  <div class="reel-strip-label">[Premier Training · Clips destacados]</div>
+  <div class="reel-grid">
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="pt-reel-1" data-reel-num="01">
+        <div class="reel-num">01</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="pt-reel-2" data-reel-num="02">
+        <div class="reel-num">02</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="pt-reel-3" data-reel-num="03">
+        <div class="reel-num">03</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prism-line"></div>
+
+<!-- ══════════════════════════════════════
+     CAPÍTULO 2: GRADUACIÓN
+══════════════════════════════════════ -->
+<div class="chapter-header fi">
+  <div class="chapter-tag">[Registro 02 · Emoción]</div>
+  <h2 class="chapter-title">Graduación 2014–2015</h2>
+  <p class="chapter-desc">Nostalgia y Storytelling Humano — Un viaje íntimo a través de los recuerdos de una generación. Entrelazando anécdotas vulnerables, los miedos de la infancia y los mensajes de los profesores para construir un emotivo retrato colectivo de lo que significa un segundo hogar.</p>
+</div>
+
+<!-- Graduación: Hero media -->
+<div class="project-hero fi" style="min-height: 65vh;">
+  <div class="media-wrap">
+    <div class="media-swap-wrap empty-slot" id="grad-hero-wrap" style="height:100%; min-height:65vh;">
+      <div class="swap-hint">
+        <div class="empty-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
+          Subir vídeo principal
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="media-overlay"></div>
+  <div class="hud-corner">PROJECT: GRADUACIÓN<br>SEQ: NOSTALGIA 01<br>TRT: 05:32:18</div>
+  <div class="slide-text">
+    <div class="slide-eyebrow">[Nostalgia · Storytelling Humano]</div>
+    <h3 class="slide-title"><span style="color:#FFD600;">Graduación 2014–2015</span></h3>
+    <p class="slide-body" style="max-width: 640px;">Un viaje íntimo a través de los recuerdos de una generación. Entrelazando anécdotas vulnerables, los miedos de la infancia y los mensajes de los profesores para construir un emotivo retrato colectivo de lo que significa un segundo hogar.</p>
+  </div>
+</div>
+
+<!-- Graduación: Emotion architecture -->
+<div class="anatomy-section fi" style="background: var(--bg);">
+  <div class="anatomy-header">
+    <h3 class="anatomy-title">Arquitectura de la Emoción</h3>
+    <div class="anatomy-timecode">TIMECODE: 05:12:00</div>
+  </div>
+  <div class="timeline-bar" style="--bar-color: #FFD600;">
+    <style>.anatomy-section:nth-of-type(2) .timeline-bar::before { background: linear-gradient(90deg, #FFD600, rgba(255,214,0,0.2)); }</style>
+  </div>
+  <div class="timeline-markers">
+    <div class="timeline-marker" style="--dot-c:#FFD600;">
+      <div class="marker-dot" style="background:#FFD600; box-shadow: 0 0 12px rgba(255,214,0,0.5);"></div>
+      <div class="marker-time" style="color:#FFD600;">[00:45]</div>
+      <div class="marker-name">El Gancho Humano</div>
+      <div class="marker-desc">Edición entrelazada de recuerdos vulnerables, como el llanto del primer día, para generar empatía inmediata en la audiencia.</div>
+    </div>
+    <div class="timeline-marker" style="--dot-c:#FFD600;">
+      <div class="marker-dot" style="background:#FFD600; box-shadow: 0 0 12px rgba(255,214,0,0.5);"></div>
+      <div class="marker-time" style="color:#FFD600;">[02:15]</div>
+      <div class="marker-name">Ritmo Conversacional</div>
+      <div class="marker-desc">Uso intencionado de silencios y cortes de reacción entre testimonios. Dejar respirar la emoción al describir el colegio como una segunda casa.</div>
+    </div>
+    <div class="timeline-marker" style="--dot-c:#FFD600;">
+      <div class="marker-dot" style="background:#FFD600; box-shadow: 0 0 12px rgba(255,214,0,0.5);"></div>
+      <div class="marker-time" style="color:#FFD600;">[04:30]</div>
+      <div class="marker-name">Clímax Colectivo</div>
+      <div class="marker-desc">Montaje musical ascendente unificando las voces de despedida de profesores y alumnos en una sola catarsis audiovisual.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Graduación: Reels -->
+<div class="reel-strip fi">
+  <div class="reel-strip-label">[Graduación 2014–2015 · Clips destacados]</div>
+  <div class="reel-grid">
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="grad-reel-1" data-reel-num="01">
+        <div class="reel-num">01</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="grad-reel-2" data-reel-num="02">
+        <div class="reel-num">02</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="grad-reel-3" data-reel-num="03">
+        <div class="reel-num">03</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prism-line"></div>
+
+<!-- ══════════════════════════════════════
+     CAPÍTULO 3: CAMPAÑA PROMOCIONAL
+══════════════════════════════════════ -->
+<div class="chapter-header fi">
+  <div class="chapter-tag">[Registro 03 · Impacto]</div>
+  <h2 class="chapter-title">Campaña Promocional</h2>
+  <p class="chapter-desc">Mensaje Directo y Escala Metropolitana — Madrid es la ciudad de la que nadie es y en la que todo el mundo es bienvenido. Una pieza audiovisual promocional diseñada meticulosamente para generar impacto inmediato, retener la atención y movilizar al espectador.</p>
+</div>
+
+<!-- Campaña: Hero media -->
+<div class="project-hero fi" style="min-height: 65vh;">
+  <div class="media-wrap">
+    <div class="media-swap-wrap empty-slot" id="camp-hero-wrap" style="height:100%; min-height:65vh;">
+      <div class="swap-hint">
+        <div class="empty-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
+          Subir vídeo principal
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="media-overlay"></div>
+  <div class="hud-corner">PROJECT: CAMPAÑA<br>SEQ: IMPACTO METRO<br>TIMECODE: 08:24:15</div>
+  <div class="slide-text">
+    <div class="slide-eyebrow">[Mensaje Directo · Escala Metropolitana]</div>
+    <h3 class="slide-title"><span style="color:#8B2FFF;">Campaña Promocional</span></h3>
+    <p class="slide-body" style="max-width: 640px;">Madrid es la ciudad de la que nadie es y en la que todo el mundo es bienvenido. Una pieza audiovisual promocional diseñada meticulosamente para generar impacto inmediato, retener la atención y movilizar al espectador.</p>
+  </div>
+</div>
+
+<!-- Campaña: Precision architecture -->
+<div class="anatomy-section fi">
+  <div class="anatomy-header">
+    <h3 class="anatomy-title">Precisión Publicitaria</h3>
+    <div class="anatomy-timecode">TIMECODE: 00:45:00</div>
+  </div>
+  <div class="timeline-bar">
+    <style>.camp-bar::before { background: linear-gradient(90deg, #8B2FFF, rgba(139,47,255,0.2)) !important; }</style>
+  </div>
+  <div class="timeline-markers">
+    <div class="timeline-marker impacto">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[00:05]</div>
+      <div class="marker-name">Establecimiento del Escenario</div>
+      <div class="marker-desc">Montaje visual panorámico de Madrid para fijar instantáneamente el tono de identidad, pertenencia y apertura de la ciudad.</div>
+    </div>
+    <div class="timeline-marker impacto">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[00:20]</div>
+      <div class="marker-name">Enfoque en el Personaje</div>
+      <div class="marker-desc">Cortes precisos y diseño sonoro que dirigen toda la atención visual y auditiva hacia el sujeto central, aislando el mensaje principal.</div>
+    </div>
+    <div class="timeline-marker impacto">
+      <div class="marker-dot"></div>
+      <div class="marker-time">[00:35]</div>
+      <div class="marker-name">Call to Action</div>
+      <div class="marker-desc">Edición rítmica y acelerada hacia el contundente mensaje de cierre, maximizando la retención del espectador en los segundos finales.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Campaña: Reels -->
+<div class="reel-strip fi">
+  <div class="reel-strip-label">[Campaña Promocional · Clips destacados]</div>
+  <div class="reel-grid">
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="camp-reel-1" data-reel-num="01">
+        <div class="reel-num">01</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="camp-reel-2" data-reel-num="02">
+        <div class="reel-num">02</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+    <div class="reel-slot">
+      <div class="media-swap-wrap empty-slot" id="camp-reel-3" data-reel-num="03">
+        <div class="reel-num">03</div>
+        <div class="swap-hint"><div class="empty-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>Reel</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prism-line"></div>
+
+<!-- ══════════════════════════════════════
+     CAPÍTULO 4: CONCILIACIÓN
+══════════════════════════════════════ -->
+<div class="chapter-header fi" id="conciliacion">
+  <div class="chapter-tag">[Registro 04 · Equilibrio]</div>
+  <h2 class="chapter-title">Conciliación</h2>
+  <p class="chapter-desc">Narrativa del Equilibrio y la Convivencia — Una pieza audiovisual que explora la armonía entre el mundo laboral y la vida personal. Un retrato visual sensible y reflexivo que pone en valor el tiempo, las personas y los espacios compartidos.</p>
+</div>
+
+<!-- Conciliación: Hero media -->
+<div class="project-hero fi" style="min-height: 65vh;">
+  <div class="media-wrap">
+    <div class="media-swap-wrap empty-slot" id="conc-hero-wrap" style="height:100%; min-height:65vh;">
+      <div class="swap-hint">
+        <div class="empty-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
+          Subir vídeo principal
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="media-overlay"></div>
+  <div class="hud-corner">PROJECT: CONCILIACIÓN<br>SEQ: EQUILIBRIO 01<br>TIMECODE: 03:12:00</div>
+  <div class="slide-text">
+    <div class="slide-eyebrow">[Equilibrio · Convivencia]</div>
+    <h3 class="slide-title"><span style="color:#00FF6A;">Conciliación</span></h3>
+    <p class="slide-body" style="max-width: 640px;">Narrativa del equilibrio y la convivencia. Un retrato visual sensible y reflexivo que pone en valor el tiempo, las personas y los espacios compartidos entre lo profesional y lo personal.</p>
+  </div>
+</div>
+
+<!-- Conciliación: Architecture -->
+<div class="anatomy-section fi">
+  <div class="anatomy-header">
+    <h3 class="anatomy-title">Estructura Narrativa</h3>
+    <div class="anatomy-timecode">TIMECODE: 03:00:00</div>
+  </div>
+  <div class="timeline-bar">
+    <style>.anatomy-section .timeline-bar.conc-bar::before { background: linear-gradient(90deg, #00FF6A, rgba(0,255,106,0.15)) !important; }</style>
+  </div>
+  <div class="timeline-markers">
+    <div class="timeline-marker" style="--dot-c:#00FF6A;">
+      <div class="marker-dot" style="background:#00FF6A; box-shadow: 0 0 12px rgba(0,255,106,0.5);"></div>
+      <div class="marker-time" style="color:#00FF6A;">[00:10]</div>
+      <div class="marker-name">El Punto de Partida</div>
+      <div class="marker-desc">Presentación del entorno cotidiano. Planos contemplativos que establecen la dualidad entre el espacio de trabajo y el hogar.</div>
+    </div>
+    <div class="timeline-marker" style="--dot-c:#00FF6A;">
+      <div class="marker-dot" style="background:#00FF6A; box-shadow: 0 0 12px rgba(0,255,106,0.5);"></div>
+      <div class="marker-time" style="color:#00FF6A;">[01:20]</div>
+      <div class="marker-name">El Encuentro</div>
+      <div class="marker-desc">Transición entre mundos. La edición suaviza los cortes para transmitir fluidez, como si los dos ámbitos se fundieran naturalmente.</div>
+    </div>
+    <div class="timeline-marker" style="--dot-c:#00FF6A;">
+      <div class="marker-dot" style="background:#00FF6A; box-shadow: 0 0 12px rgba(0,255,106,0.5);"></div>
+      <div class="marker-time" style="color:#00FF6A;">[02:40]</div>
+      <div class="marker-name">La Resolución</div>
+      <div class="marker-desc">Cierre poético. Planos lentos y música ambiental que invitan al espectador a reflexionar sobre sus propias prioridades vitales.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section fi">
+  <div class="cta-rec-btn">
+    <div class="cta-rec-inner">
+      <div class="cta-rec-dot"></div>
+      REC ▶
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · Portfolio JB — Series de Vídeo</p>
+  <div class="f-links">
+    <a href="https://github.com/jaimebrando98" target="_blank">GitHub</a>
+    <a href="https://www.instagram.com/jbphotografy98" target="_blank">Instagram</a>
+    <a href="https://www.linkedin.com/in/jaime-brando-medina-rojas/" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX MODAL -->
+<div class="media-modal" id="mediaModal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="media-modal-close" onclick="closeLightbox()">✕</button>
+    <img id="modalImg" src="" alt="" style="display:none;">
+    <video id="modalVideo" src="" controls style="display:none;"></video>
+  </div>
+</div>
+
+<script>
+/* ── HAMBURGER MENU ── */
+const hamBtn = document.getElementById('hamBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+hamBtn.addEventListener('click', () => {
+  hamBtn.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+/* ── TIMECODE COUNTER ── */
+let tc = 1;
+setInterval(() => {
+  tc++;
+  const h = String(Math.floor(tc/3600)).padStart(2,'0');
+  const m = String(Math.floor((tc%3600)/60)).padStart(2,'0');
+  const s = String(tc%60).padStart(2,'0');
+  const f = String(Math.floor(Math.random()*24)).padStart(2,'0');
+  const el = document.getElementById('timecodeHero');
+  if (el) el.textContent = `TIMECODE: ${h}:${m}:${s}:${f}`;
+}, 1000);
+
+/* ── SWAP MEDIA (image OR video) with lightbox ── */
+function swapMedia(input, wrapId, isReel) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const wrap = document.getElementById(wrapId);
+  const isVideo = file.type.startsWith('video/');
+  const url = URL.createObjectURL(file);
+  const reelNum = wrap.dataset.reelNum || '';
+
+  if (isVideo) {
+    wrap.innerHTML = `
+      ${reelNum ? `<div class="reel-num">${reelNum}</div>` : ''}
+      <video src="${url}" autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <div class="lightbox-hint">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </div>
+    `;
+    wrap.classList.remove('empty-slot');
+    wrap.onclick = (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      openLightbox('video', url);
+    };
+  } else {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      wrap.innerHTML = `
+        ${reelNum ? `<div class="reel-num">${reelNum}</div>` : ''}
+        <img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="lightbox-hint">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        </div>
+      `;
+      wrap.classList.remove('empty-slot');
+      wrap.onclick = (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        openLightbox('img', ev.target.result);
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+/* ── LIGHTBOX ── */
+function openLightbox(type, src) {
+  const modal = document.getElementById('mediaModal');
+  const img = document.getElementById('modalImg');
+  const vid = document.getElementById('modalVideo');
+  if (type === 'img') {
+    img.src = src; img.style.display = 'block';
+    vid.style.display = 'none'; vid.src = '';
+  } else {
+    vid.src = src; vid.style.display = 'block'; vid.play();
+    img.style.display = 'none'; img.src = '';
+  }
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const modal = document.getElementById('mediaModal');
+  const vid = document.getElementById('modalVideo');
+  modal.classList.remove('open');
+  vid.pause(); vid.src = '';
+  document.getElementById('modalImg').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.getElementById('mediaModal').addEventListener('click', function(e) {
+  if (e.target === this || e.target.classList.contains('modal-backdrop')) closeLightbox();
+});
+
+/* ── FADE IN ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+/* ── NAV ACTIVE PILL ── */
+document.querySelectorAll('.npill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.npill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
