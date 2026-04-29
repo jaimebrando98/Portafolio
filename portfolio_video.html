@@ -890,7 +890,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Premier Training: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="pt-hero-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot empty-yt" id="pt-hero-wrap" data-yt="https://www.youtube.com/watch?v=8MYuuwObSp0" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Premier Training
@@ -983,7 +983,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Graduación: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="grad-hero-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot empty-yt" id="grad-hero-wrap" data-yt="https://www.youtube.com/watch?v=fGQjyQLYk8k" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Graduación 2014–2015
@@ -1078,7 +1078,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Campaña: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="camp-hero-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot empty-yt" id="camp-hero-wrap" data-yt="https://www.youtube.com/watch?v=ASOYbsIFMug" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Campaña Promocional
@@ -1173,7 +1173,7 @@ footer p { font-size: 12px; color: var(--text-label); }
 <!-- Conciliación: Hero media -->
 <div class="project-hero fi" style="min-height: 65vh;">
   <div class="media-wrap">
-    <div class="yt-slot empty-yt" id="conc-hero-wrap" data-yt="" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
+    <div class="yt-slot empty-yt" id="conc-hero-wrap" data-yt="https://www.youtube.com/watch?v=z2C0-O2WGdM" data-reel="false" onclick="ytClick(this)" style="height:100%;min-height:65vh;">
       <div class="yt-empty-msg">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M15 12l-5 3V9l5 3z"/></svg>
         YouTube · Conciliación
@@ -1324,26 +1324,33 @@ function renderSlot(slot, id) {
 
 /* ── CLICK HANDLER ── */
 function ytClick(slot) {
-  const id = slot.dataset.ytId;
-  if (!id) return; // empty slot, do nothing
+  const rawUrl = slot.getAttribute('data-yt'); 
+  if (!rawUrl) return;
+  let videoId = "";
+  if (rawUrl.includes('v=')) {
+    videoId = rawUrl.split('v=')[1].split('&')[0];
+  } else if (rawUrl.includes('youtu.be/')) {
+    videoId = rawUrl.split('youtu.be/')[1].split('?')[0];
+  } else if (rawUrl.includes('shorts/')) {
+    videoId = rawUrl.split('shorts/')[1].split('?')[0];
+  }
   const isReel = slot.dataset.reel === 'true';
   const wrap = document.getElementById('ytIframeWrap');
   const iframe = document.getElementById('ytIframe');
-  wrap.classList.toggle('reel-ratio', isReel);
-  iframe.src = ytEmbedUrl(id);
+  if (wrap) wrap.classList.toggle('reel-ratio', isReel);
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
   const modal = document.getElementById('ytModal');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-}
-
 function ytClose() {
   const modal = document.getElementById('ytModal');
   modal.classList.remove('open');
-  document.getElementById('ytIframe').src = ''; // stop video
+  document.getElementById('ytIframe').src = ''; // Detiene el vídeo al cerrar
   document.body.style.overflow = '';
 }
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') ytClose(); });
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Escape') ytClose(); 
+});
 
 /* ── FADE IN ── */
 const obs = new IntersectionObserver(entries => {
