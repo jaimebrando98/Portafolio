@@ -1324,13 +1324,20 @@ function renderSlot(slot, id) {
 
 /* ── CLICK HANDLER ── */
 function ytClick(slot) {
-  const id = slot.dataset.ytId;
-  if (!id) return; // empty slot, do nothing
+  const url = slot.dataset.ytId;
+  if (!url) return; // empty slot, do nothing
+  let id = "";
+  if (url.includes('v=')) {
+    id = url.split('v=')[1].split('&')[0];
+  } else if (url.includes('youtu.be/')) {
+    id = url.split('youtu.be/')[1].split('?')[0];
+  }
   const isReel = slot.dataset.reel === 'true';
   const wrap = document.getElementById('ytIframeWrap');
   const iframe = document.getElementById('ytIframe');
-  wrap.classList.toggle('reel-ratio', isReel);
-  iframe.src = ytEmbedUrl(id);
+  
+  if (wrap) wrap.classList.toggle('reel-ratio', isReel);
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`;
   const modal = document.getElementById('ytModal');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
